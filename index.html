@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<!--
+    Page template: Stellar by HTML5 UP (html5up.net, CCA 3.0) — reused from the MineDojo site style.
+    Content: Paper2Video — automatic paper-to-video explainers built on HyperFrames.
+-->
+<html>
+<head>
+    <title>Paper2Video — turn any paper into a 60-second explainer</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Paper2Video automatically turns a research paper into a 60-second animated explainer video — extracting figures, writing an 8-beat script, narrating it, and adding an optional talking-head avatar. Built on HyperFrames."/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <link rel="stylesheet" href="assets/css/video_gallery.css"/>
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+    <style>
+        /* ---- Paper2Video theme overrides (dark, academic) ---- */
+        #header.alt {
+            background: radial-gradient(1200px 700px at 30% 10%, #2b0a3a 0%, #140a2b 45%, #070611 100%);
+            color: #f4f6fb;
+        }
+        #header h1 { font-size: 3.4em; font-weight: 800; letter-spacing: -.02em; margin: 0; }
+        #header .tagline { font-size: 1.45em; font-weight: 300; color: #d7c7f5; margin: .6em 0 .2em; }
+        #header .sub { font-family: 'Courier New', monospace; letter-spacing: .18em; font-size: .8em;
+            color: #9d8fd0; text-transform: uppercase; }
+        #header .badges { margin-top: 1.2em; }
+        #header .badges a { display:inline-block; margin:.25em .4em; padding:.45em 1em; border-radius:999px;
+            border:1px solid rgba(255,255,255,.28); color:#f4f6fb; font-size:.8em; letter-spacing:.04em;
+            text-decoration:none; }
+        #header .badges a:hover { background:rgba(255,255,255,.12); }
+        .vidwrap { background:#000; border-radius:12px; overflow:hidden; box-shadow:0 18px 50px rgba(0,0,0,.35); }
+        .vidwrap video { display:block; width:100%; border-radius:12px; }
+        .pcap { font-size: 92%; text-align:left; margin-top:.5em; }
+        .pcap b { display:block; font-size:108%; }
+        .pcap span { color:#8a8aa0; font-size:90%; }
+        /* pipeline */
+        .pipe { display:flex; flex-wrap:wrap; justify-content:center; gap:0; margin:1.5em 0 .5em; }
+        .pstep { flex:1 1 150px; max-width:200px; padding:18px 14px; }
+        .pstep .n { width:40px;height:40px;line-height:40px;border-radius:50%;margin:0 auto 10px;
+            font-weight:700;color:#fff;background:linear-gradient(135deg,#a64bf4,#f4708e); }
+        .pstep .t { font-weight:700; font-size:.98em; }
+        .pstep .d { font-size:.82em; color:#8a8aa0; margin-top:4px; }
+        .parr { align-self:center; color:#a64bf4; font-size:1.4em; padding:0 2px; }
+        /* 8-beat grid */
+        .beats { list-style:none; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:1em; }
+        .beats li { background:rgba(120,90,200,.08); border:1px solid rgba(120,90,200,.22);
+            border-radius:12px; padding:16px 16px; text-align:left; }
+        .beats li b { color:#c9b6f5; }
+        @media (max-width:980px){ .beats{grid-template-columns:repeat(2,1fr);} .parr{display:none;} }
+        @media (max-width:736px){ .beats{grid-template-columns:1fr;} }
+    </style>
+</head>
+<body class="is-preload">
+
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header" class="alt">
+        <h1>Paper2Video</h1>
+        <p class="tagline">Turn any research paper into a 60-second explainer video — automatically.</p>
+        <p class="sub">Built on HyperFrames · ICML 2026 papers</p>
+        <p class="badges">
+            <a href="#how">How it works</a>
+            <a href="#narrators">Avatar narrators</a>
+            <a href="#papers">10 papers</a>
+            <a href="https://github.com/MadMax3366/paper2video.github.io" target="_blank">GitHub</a>
+        </p>
+    </header>
+
+    <!-- Nav -->
+    <nav id="nav">
+        <ul>
+            <li><a href="#intro" class="active">Overview</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#narrators">Avatar narrators</a></li>
+            <li><a href="#papers">Papers</a></li>
+            <li><a href="https://github.com/MadMax3366/paper2video.github.io" target="_blank">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+
+        <!-- Hero -->
+        <section id="intro" class="main">
+            <div class="content">
+                <header class="major" style="margin-bottom:.6em">
+                    <h2 style="text-align:left;">Watch one in 60 seconds</h2>
+                    <p style="text-align:left; font-size:110%; font-weight:lighter; margin-top:-2em">
+                        A research paper, explained end-to-end — problem, method, experiments, results,
+                        contributions and takeaway — with the paper's own figures and an AI avatar narrator.
+                        Everything below is generated automatically.</p>
+                </header>
+                <div class="vidwrap">
+                    <video controls loop autoplay muted playsinline preload="metadata">
+                        <source src="videos/hero.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <p class="pcap"><b>Reward Hacking Benchmark</b>
+                    <span>Measuring Exploits in LLM Agents with Tool Use · ICML 2026 · arXiv:2605.02964 · with SadTalker avatar narrator</span></p>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section id="how" class="main special">
+            <header class="major">
+                <h1 style="text-align:left;">What is Paper2Video?</h1>
+                <p style="font-size:110%; font-weight:lighter; text-align:left; margin-top:-2em">
+                    Paper2Video reads a research paper and produces a polished 60-second explainer with no
+                    human editing. It extracts the paper's <b>main figure</b> and <b>result tables/plots</b>,
+                    writes a content-rich <b>8-beat narration</b>, lays out an animated
+                    <a href="https://github.com" target="_blank">HyperFrames</a> composition with on-screen
+                    captions and figure call-outs, generates a <b>voiceover</b>, renders the video, and
+                    optionally composites a <b>talking-head avatar</b> narrator in the corner.</p>
+            </header>
+
+            <div class="pipe">
+                <div class="pstep"><div class="n">1</div><div class="t">Read paper</div><div class="d">parse PDF text</div></div>
+                <div class="parr">→</div>
+                <div class="pstep"><div class="n">2</div><div class="t">Extract figures</div><div class="d">main figure · result table/plot</div></div>
+                <div class="parr">→</div>
+                <div class="pstep"><div class="n">3</div><div class="t">8-beat script</div><div class="d">+ TTS voiceover</div></div>
+                <div class="parr">→</div>
+                <div class="pstep"><div class="n">4</div><div class="t">HyperFrames</div><div class="d">animated scenes + captions</div></div>
+                <div class="parr">→</div>
+                <div class="pstep"><div class="n">5</div><div class="t">Render + avatar</div><div class="d">60s video, optional narrator</div></div>
+            </div>
+
+            <header class="major" style="margin-top:2.5em">
+                <h2 style="text-align:left;">Every explainer answers the same 8 questions</h2>
+            </header>
+            <ul class="beats">
+                <li><b>1 · Hook</b><br>why should you care?</li>
+                <li><b>2 · Problem</b><br>what does it solve / evaluate?</li>
+                <li><b>3 · Method</b><br>what does it propose?</li>
+                <li><b>4 · Experiments</b><br>what was run?</li>
+                <li><b>5 · Results</b><br>the key number / trend</li>
+                <li><b>6 · Contributions</b><br>2–3 distinct ones</li>
+                <li><b>7 · Insight</b><br>what it teaches us</li>
+                <li><b>8 · Takeaway</b><br>one closing line</li>
+            </ul>
+        </section>
+
+        <!-- Avatar narrators -->
+        <section id="narrators" class="main special">
+            <header class="major">
+                <h1 style="text-align:left;">Avatar narrators (optional)</h1>
+                <p style="font-size:110%; font-weight:lighter; text-align:left; margin-top:-2em">
+                    The same explainer, three narrator options — pick by quality vs. cost. The realistic
+                    heads are generated on a GPU from the narration audio and composited as a corner overlay.</p>
+            </header>
+            <ul class="features-4column" style="margin-top:-1em">
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/av_cartoon.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Animated robot</b><span>CSS/Three.js · no GPU, instant</span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/av_sadtalker.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>SadTalker (default)</b><span>realistic · fast & light</span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/av_hallo2.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Hallo2</b><span>diffusion · richest expression</span></p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Paper gallery -->
+        <section id="papers" class="main special">
+            <header class="major">
+                <h1 style="text-align:left;">10 ICML 2026 papers, auto-explained</h1>
+                <p style="font-size:110%; font-weight:lighter; text-align:left; margin-top:-2em">
+                    Each video was produced by the same automated pipeline from the paper's PDF.</p>
+            </header>
+            <ul class="features-4column" style="margin-top:-1em">
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p01.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Reward Hacking Benchmark</b><span>Measuring exploits in LLM tool agents · <a href="https://arxiv.org/abs/2605.02964" target="_blank">arXiv:2605.02964</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p02.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>A Science of AI Agent Reliability</b><span>Beyond a single accuracy score · <a href="https://arxiv.org/abs/2602.16666" target="_blank">arXiv:2602.16666</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p03.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>The Expert Strikes Back</b><span>Interpreting Mixture-of-Experts LLMs · <a href="https://arxiv.org/abs/2604.02178" target="_blank">arXiv:2604.02178</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p04.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Scaling Video Understanding</b><span>Latent multi-agent collaboration (MACF) · <a href="https://arxiv.org/abs/2605.00444" target="_blank">arXiv:2605.00444</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p05.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Entropy-informed Decoding (EDEN)</b><span>Adaptive information-driven branching · <a href="https://arxiv.org/abs/2605.09745" target="_blank">arXiv:2605.09745</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p06.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>STEER</b><span>Structured event evidence for video reasoning · <a href="https://arxiv.org/abs/2604.04415" target="_blank">arXiv:2604.04415</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p07.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Why Diffusion LMs Struggle</b><span>with truly parallel decoding · <a href="https://arxiv.org/abs/2602.23225" target="_blank">arXiv:2602.23225</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p08.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Say, Dream, and Act</b><span>Video world models for robot manipulation · <a href="https://arxiv.org/abs/2602.10717" target="_blank">arXiv:2602.10717</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p09.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>VGGRPO</b><span>World-consistent video gen · 4D latent reward · <a href="https://arxiv.org/abs/2603.26599" target="_blank">arXiv:2603.26599</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p10.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>AnyBand-Diff</b><span>Physics-aware remote-sensing generation · <a href="https://arxiv.org/abs/2605.14341" target="_blank">arXiv:2605.14341</a></span></p>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <section>
+            <h2>About</h2>
+            <p style="text-align:left">Paper2Video is an automated paper-to-video pipeline built on
+                <b>HyperFrames</b> (write HTML, render video). Figures and tables are extracted from each PDF,
+                an 8-beat narration is written and voiced, an animated composition is rendered, and an optional
+                realistic talking-head avatar is composited in the corner.</p>
+        </section>
+        <section>
+            <h2>Links</h2>
+            <ul class="icons">
+                <li><a href="https://github.com/MadMax3366/paper2video.github.io" target="_blank" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+            </ul>
+        </section>
+        <p class="copyright">Page style: <a href="https://html5up.net">Stellar by HTML5 UP</a>. Videos generated with HyperFrames.</p>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

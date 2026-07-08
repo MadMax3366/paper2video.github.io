@@ -1,2 +1,63 @@
 model=gpt-image-2 base=https://sogenport.com/v1
-saved /mnt/data0/LX_Bench/CS/hyperframes/paper2video.github.io/images/page_bg.png 2217609
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+  File "/usr/local/lib/python3.10/dist-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/local/lib/python3.10/dist-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+  File "/usr/local/lib/python3.10/dist-packages/httpcore/_sync/http_proxy.py", line 343, in handle_request
+    return self._connection.handle_request(request)
+  File "/usr/local/lib/python3.10/dist-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/usr/local/lib/python3.10/dist-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+  File "/usr/local/lib/python3.10/dist-packages/httpcore/_sync/http11.py", line 231, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/openai/_base_client.py", line 1019, in request
+    response = self._send_request(
+  File "/usr/local/lib/python3.10/dist-packages/openai/_client.py", line 400, in _send_request
+    return self._send_with_auth_retry(request, stream=stream, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/openai/_client.py", line 378, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/openai/_base_client.py", line 947, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/usr/local/lib/python3.10/dist-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/data0/LX_Bench/CS/hyperframes/paper2video.github.io/scripts/gen_page_bg.py", line 37, in <module>
+    r = client.images.generate(**kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/openai/resources/images.py", line 887, in generate
+    return self._post(
+  File "/usr/local/lib/python3.10/dist-packages/openai/_base_client.py", line 1314, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/usr/local/lib/python3.10/dist-packages/openai/_base_client.py", line 1054, in request
+    raise APIConnectionError(request=request) from err
+openai.APIConnectionError: Connection error.

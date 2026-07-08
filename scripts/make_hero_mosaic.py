@@ -117,9 +117,12 @@ def main():
     p = f"((on-{f_hold})/{span})"
     zexpr = (f"if(lte(on,{f_hold}),2,"
              f"if(gte(on,{f_zoom}),1,2-pow({p}\\,2)*(3-2*{p})))")
+    # supersample the zoom (render at wall resolution, then lanczos-downscale)
+    # so the virtual camera moves in sub-output-pixel steps without jitter
     filters.append(
         f"[rounded]zoompan=z='{zexpr}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2'"
-        f":d=1:s={out_w}x{out_h}:fps={args.fps},format=yuv420p[out]")
+        f":d=1:s={wall_w}x{wall_h}:fps={args.fps},"
+        f"scale={out_w}:{out_h}:flags=lanczos,format=yuv420p[out]")
 
     os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
     run(["ffmpeg", "-y", "-loglevel", "warning", *inputs,

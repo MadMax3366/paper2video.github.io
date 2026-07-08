@@ -17,8 +17,11 @@
     <style>
         /* ---- Paper2Video theme overrides (dark, academic) ---- */
         /* full-page generated background (MineDojo-style) */
-        html, body {
-            background: #0a0a16 url('images/page_bg.png') center top / cover no-repeat fixed;
+        html, body { background: #0a0a16; }
+        body::before { /* fixed background layer — smoother than background-attachment:fixed */
+            content:""; position:fixed; inset:0; z-index:-1;
+            background:#0a0a16 url('images/page_bg.png') center top / cover no-repeat;
+            transform:translateZ(0); will-change:transform;
         }
         /* compact, fully transparent title area — page background shows through */
         #header.alt {
@@ -43,13 +46,21 @@
             border:1px solid rgba(255,255,255,.28); color:#f4f6fb; font-size:.8em; letter-spacing:.04em;
             text-decoration:none; }
         #header .badges a:hover { background:rgba(255,255,255,.12); }
-        /* glass nav bridging dark hero and white card */
-        #nav { background:rgba(255,255,255,.88); backdrop-filter:blur(14px);
-            box-shadow:0 12px 36px rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.45); }
-        #nav a.active { background:linear-gradient(135deg,#a64bf4,#f4708e); color:#fff !important;
+        /* nav: always visible, pinned while scrolling, solid + readable */
+        #nav, #nav.alt {
+            position:-webkit-sticky !important; position:sticky !important; top:0 !important;
+            width:70em; max-width:calc(100% - 4em); margin:0 auto;
+            background:#ffffff; border:1px solid rgba(0,0,0,.07);
+            box-shadow:0 10px 30px rgba(0,0,0,.18); z-index:10000;
+            border-radius:0 0 .6em .6em; padding:.7em 1em;
+        }
+        #nav ul li a { color:#2a2a3d !important; opacity:1 !important; }
+        #nav ul li a:hover { background:rgba(166,75,244,.12); }
+        #nav ul li a.active { background:linear-gradient(135deg,#a64bf4,#f4708e); color:#fff !important;
             box-shadow:0 8px 20px rgba(166,75,244,.28); }
+        #nav + #main { padding-top:1.5em; }
         /* content card + section rhythm */
-        #main { background:rgba(255,255,255,.96); backdrop-filter:blur(10px);
+        #main { background:rgba(255,255,255,.97);
             box-shadow:0 32px 90px rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.55); }
         #main > .main { padding-top:4.5em; padding-bottom:4.5em; }
         header.major { margin-bottom:2em; }
@@ -205,83 +216,83 @@
             </header>
             <ul class="features-4column" style="margin-top:-1em">
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n01.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n01.jpg"><source src="videos/n01.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>OctoTools</b><span>Extensible tool-based multi-agent framework for complex reasoning · <a href="https://arxiv.org/abs/2502.11271" target="_blank">arXiv:2502.11271</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n06.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n06.jpg"><source src="videos/n06.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>AgentRouter</b><span>Knowledge-graph-guided LLM router for multi-agent QA · <a href="https://arxiv.org/abs/2510.05445" target="_blank">arXiv:2510.05445</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n24.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n24.jpg"><source src="videos/n24.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>NavA³</b><span>Understand any instruction, navigate anywhere, find anything · <a href="https://arxiv.org/abs/2508.04598" target="_blank">arXiv:2508.04598</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n23.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n23.jpg"><source src="videos/n23.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>Paper2Poster</b><span>Multimodal poster automation from scientific papers · <a href="https://arxiv.org/abs/2505.21497" target="_blank">arXiv:2505.21497</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n09.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n09.jpg"><source src="videos/n09.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>SFTMix</b><span>Elevating instruction tuning with a Mixup recipe · <a href="https://arxiv.org/abs/2410.05248" target="_blank">arXiv:2410.05248</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n12.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n12.jpg"><source src="videos/n12.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>ReEx-SQL</b><span>Execution-aware reinforcement learning for text-to-SQL · <a href="https://arxiv.org/abs/2505.12768" target="_blank">arXiv:2505.12768</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n04.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n04.jpg"><source src="videos/n04.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>Uni-MMMU</b><span>Massive multi-discipline multimodal unified benchmark · <a href="https://arxiv.org/abs/2510.13759" target="_blank">arXiv:2510.13759</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n16.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n16.jpg"><source src="videos/n16.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>REDI</b><span>Reinforcement distillation harnessing negative teacher signals · <a href="https://arxiv.org/abs/2505.24850" target="_blank">arXiv:2505.24850</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n27.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n27.jpg"><source src="videos/n27.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>KAPPA</b><span>Inference-time chain-of-thought pruning with latent signals · <a href="https://arxiv.org/abs/2511.00699" target="_blank">arXiv:2511.00699</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n29.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n29.jpg"><source src="videos/n29.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>MemBuilder</b><span>Reinforcing LLMs for long-term memory construction · <a href="https://arxiv.org/abs/2601.05488" target="_blank">arXiv:2601.05488</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n02.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n02.jpg"><source src="videos/n02.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>PosterForest</b><span>Hierarchical multi-agent collaboration for scientific posters · <a href="https://arxiv.org/abs/2508.21720" target="_blank">arXiv:2508.21720</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n05.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n05.jpg"><source src="videos/n05.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>MathFlow</b><span>Enhancing the perceptual flow of MLLMs for visual math problems · <a href="https://arxiv.org/abs/2503.16549" target="_blank">arXiv:2503.16549</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n08.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n08.jpg"><source src="videos/n08.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>MMSearch-R1</b><span>Incentivizing large multimodal models to search · <a href="https://arxiv.org/abs/2506.20670" target="_blank">arXiv:2506.20670</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n10.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n10.jpg"><source src="videos/n10.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>CodeHacker</b><span>Automated test-case generation for vulnerability detection · <a href="https://arxiv.org/abs/2602.20213" target="_blank">arXiv:2602.20213</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n13.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n13.jpg"><source src="videos/n13.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>MemReasoner</b><span>Memory-augmented LMs on reasoning-in-a-haystack tasks · <a href="https://arxiv.org/abs/2503.07903" target="_blank">arXiv:2503.07903</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n15.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n15.jpg"><source src="videos/n15.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>CachePrune</b><span>Teaching LLMs what not to follow via KV-cache editing · <a href="https://arxiv.org/abs/2504.21228" target="_blank">arXiv:2504.21228</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n21.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n21.jpg"><source src="videos/n21.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>LS-Mixture</b><span>Long-short chain-of-thought mixture supervised fine-tuning · <a href="https://arxiv.org/abs/2505.03469" target="_blank">arXiv:2505.03469</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n22.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n22.jpg"><source src="videos/n22.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>Step Pruner</b><span>Efficient and accurate reasoning beyond token length · <a href="https://arxiv.org/abs/2510.03805" target="_blank">arXiv:2510.03805</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n26.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n26.jpg"><source src="videos/n26.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>ZoomR</b><span>Memory-efficient reasoning via multi-granularity KV retrieval · <a href="https://arxiv.org/abs/2604.10898" target="_blank">arXiv:2604.10898</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n30.mp4" type="video/mp4"></video></div>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/n30.jpg"><source src="videos/n30.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>Agent Self-Evolution</b><span>Spontaneous reward-free self-evolution via world knowledge · <a href="https://arxiv.org/abs/2604.18131" target="_blank">arXiv:2604.18131</a></span></p>
                 </li>
             </ul>

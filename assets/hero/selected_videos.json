@@ -1,0 +1,133 @@
+{
+  "note": "16 videos for the hero zoom-out mosaic. Grid is 4x4 row-major; entries are placed in list order (position 0 = top-left). The opening 2x2 close-up shows grid positions 5, 6, 9, 10 (marked opening_center=true). start_offset picks a varied segment of each 120s source so the wall shows a mix of title cards, method figures and result scenes.",
+  "videos": [
+    {
+      "paper_id": "paper_02",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_02/video.mp4",
+      "title": "PosterForest: Hierarchical Multi-Agent Collaboration for Scientific Poster Generation",
+      "reason_selected": "clear tree-structured method figure, distinct green palette",
+      "start_offset": 8,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_09",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_09/video.mp4",
+      "title": "SFTMix: Elevating Language Model Instruction Tuning with Mixup Recipe",
+      "reason_selected": "clean colorful pipeline figure, good contrast",
+      "start_offset": 21,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_12",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_12/video.mp4",
+      "title": "ReEx-SQL: Reasoning with Execution-Aware Reinforcement Learning for Text-to-SQL",
+      "reason_selected": "distinctive layout, warm-toned figure, different avatar",
+      "start_offset": 34,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_16",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_16/video.mp4",
+      "title": "Harnessing Negative Signals: Reinforcement Distillation from Teacher Data",
+      "reason_selected": "two-stage diagram reads well at tile size",
+      "start_offset": 47,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_13",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_13/video.mp4",
+      "title": "Can Memory-Augmented Language Models Generalize on Reasoning-in-a-Haystack Tasks?",
+      "reason_selected": "colorful architecture figure, dark-red accents differ from neighbors",
+      "start_offset": 60,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_01",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_01/video.mp4",
+      "title": "OctoTools: A Multi-Agent Framework with Extensible Tools for Complex Reasoning",
+      "reason_selected": "opening tile: vivid multi-color framework figure, strong hero shot",
+      "start_offset": 34,
+      "opening_center": true
+    },
+    {
+      "paper_id": "paper_06",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_06/video.mp4",
+      "title": "AgentRouter: A Knowledge-Graph-Guided LLM Router for Collaborative Multi-Agent QA",
+      "reason_selected": "opening tile: striking rainbow knowledge-graph figure",
+      "start_offset": 36,
+      "opening_center": true
+    },
+    {
+      "paper_id": "paper_21",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_21/video.mp4",
+      "title": "Long-Short Chain-of-Thought Mixture Supervised Fine-Tuning",
+      "reason_selected": "green flow diagram, good tile contrast",
+      "start_offset": 73,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_27",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_27/video.mp4",
+      "title": "Inference-Time Chain-of-Thought Pruning with Latent Informativeness Signals",
+      "reason_selected": "colorful scatter/curve plots, purple background variant",
+      "start_offset": 86,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_24",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_24/video.mp4",
+      "title": "NavA3: Understanding Any Instruction, Navigating Anywhere, Finding Anything",
+      "reason_selected": "opening tile: rich embodied-navigation scene imagery, most visually distinctive",
+      "start_offset": 42,
+      "opening_center": true
+    },
+    {
+      "paper_id": "paper_23",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_23/video.mp4",
+      "title": "Paper2Poster: Towards Multimodal Poster Automation from Scientific Papers",
+      "reason_selected": "opening tile: thematically on-brand (paper-to-artifact), clear histogram figure",
+      "start_offset": 33,
+      "opening_center": true
+    },
+    {
+      "paper_id": "paper_10",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_10/video.mp4",
+      "title": "CodeHacker: Automated Test Case Generation for Detecting Vulnerabilities",
+      "reason_selected": "clean phase diagram, blue palette",
+      "start_offset": 99,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_04",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_04/video.mp4",
+      "title": "Uni-MMMU: A Massive Multi-discipline Multimodal Unified Benchmark",
+      "reason_selected": "large colorful pie-chart figure, instantly readable at small size",
+      "start_offset": 16,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_15",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_15/video.mp4",
+      "title": "CachePrune: Teaching LLMs What Not to Follow via KV-Cache Editing",
+      "reason_selected": "detailed attribution diagram, orange accents",
+      "start_offset": 29,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_29",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_29/video.mp4",
+      "title": "MemBuilder: Reinforcing LLMs for Long-Term Memory Construction",
+      "reason_selected": "blue stacked memory architecture figure",
+      "start_offset": 42,
+      "opening_center": false
+    },
+    {
+      "paper_id": "paper_30",
+      "source_video_path": "dataset/paper_to_video/eval_views/skill_v2_batch_30/paper_30/video.mp4",
+      "title": "Training LLM Agents for Spontaneous, Reward-Free Self-Evolution via World Knowledge",
+      "reason_selected": "dense colorful agent-loop figure, closes the wall with variety",
+      "start_offset": 68,
+      "opening_center": false
+    }
+  ]
+}

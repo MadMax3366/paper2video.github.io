@@ -49,22 +49,62 @@
         .beats li b { color:#c9b6f5; }
         @media (max-width:980px){ .beats{grid-template-columns:repeat(2,1fr);} .parr{display:none;} }
         @media (max-width:736px){ .beats{grid-template-columns:1fr;} }
+        /* ---- zoom-out video-wall hero ---- */
+        #header.alt.hero {
+            position:relative; min-height:92vh; display:flex; align-items:center; justify-content:center;
+            overflow:hidden; padding:6em 2em;
+            background:#0d0d18 url('assets/hero/hero_poster.jpg') center/cover no-repeat; /* fallback */
+        }
+        .hero-video {
+            position:absolute; inset:0; width:100%; height:100%;
+            object-fit:cover; z-index:0;
+        }
+        .hero-overlay {
+            position:relative; z-index:2; text-align:center; max-width:60em;
+        }
+        #header.alt.hero::after { /* darken for text legibility */
+            content:""; position:absolute; inset:0; z-index:1;
+            background:radial-gradient(ellipse at center, rgba(7,6,17,.25) 0%, rgba(7,6,17,.72) 100%);
+        }
+        .hero-overlay h1 { text-shadow:0 4px 30px rgba(0,0,0,.8); }
+        .hero-overlay .tagline { text-shadow:0 2px 18px rgba(0,0,0,.8); }
+        .hero-actions { margin-top:1.6em; }
+        .hero-actions a {
+            display:inline-block; margin:.3em .5em; padding:.75em 1.8em; border-radius:999px;
+            font-weight:700; letter-spacing:.05em; text-decoration:none; font-size:.9em;
+            border:1px solid rgba(255,255,255,.35); color:#f4f6fb;
+            backdrop-filter:blur(6px); background:rgba(20,10,43,.35);
+            transition:background .2s, transform .2s;
+        }
+        .hero-actions a:hover { background:rgba(166,75,244,.35); transform:translateY(-2px); }
+        .hero-actions a.primary { background:linear-gradient(135deg,#a64bf4,#f4708e); border:none; }
+        .hero-actions a.primary:hover { filter:brightness(1.12); }
+        @media (max-width:736px){
+            #header.alt.hero { min-height:70vh; }
+            #header h1 { font-size:2.2em; }
+            #header .tagline { font-size:1.1em; }
+        }
     </style>
 </head>
 <body class="is-preload">
 
 <div id="wrapper">
 
-    <!-- Header -->
-    <header id="header" class="alt">
-        <h1>Paper2Video</h1>
-        <p class="tagline">Turn any research paper into a 60-second explainer video — automatically.</p>
-        <p class="sub">Built on HyperFrames · ICML 2026 papers</p>
-        <p class="badges">
-            <a href="#how">How it works</a>
-            <a href="#papers">10 papers</a>
-            <a href="https://github.com/MadMax3366/paper2video.github.io" target="_blank">GitHub</a>
-        </p>
+    <!-- Header: zoom-out video-wall hero -->
+    <header id="header" class="alt hero">
+        <video class="hero-video" autoplay muted loop playsinline poster="assets/hero/hero_poster.jpg">
+            <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay">
+            <h1>Paper2Video</h1>
+            <p class="tagline">A Claude Code Skill for Scientific Paper-to-Video Generation</p>
+            <p class="sub">Built on HyperFrames · one skill, any paper, any duration</p>
+            <div class="hero-actions">
+                <a href="#intro" class="primary">Watch Demo</a>
+                <a href="#papers">Browse Gallery</a>
+                <a href="#how">How it works</a>
+            </div>
+        </div>
     </header>
 
     <!-- Nav -->

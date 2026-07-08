@@ -126,26 +126,28 @@
         <section id="intro" class="main">
             <div class="content">
                 <header class="major" style="margin-bottom:.6em">
-                    <h2 style="text-align:left;">Research PDFs in. Narrated explainer videos out.</h2>
+                    <h2 style="text-align:left;">Overview</h2>
                     <p class="section-lede">
-                        Four explainers play up close, then the camera pulls back into a wall of sixteen —
-                        drawn from 30 ACL 2026 papers, each generated end-to-end by the same skill from the
-                        paper's PDF, with the paper's own figures and an AI avatar narrator.</p>
+                        PaperReel is an AI agent skill that converts a research paper into a narrated
+                        explainer video of a caller-specified target duration. The montage below shows sixteen
+                        videos sampled from our 30-paper ACL 2026 evaluation set; every video was generated
+                        end-to-end from the paper's PDF, uses the paper's own figures and tables as visual
+                        evidence, and is narrated by a synthesized voice with a talking-head avatar.</p>
                 </header>
                 <div class="vidwrap">
                     <video controls loop autoplay muted playsinline poster="assets/hero/hero_poster.jpg">
                         <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
                     </video>
                 </div>
-                <p class="pcap"><b>PaperReel — zoom-out montage</b>
-                    <span>16 of the 30 auto-generated ACL 2026 explainers; full 2-minute videos with narration below</span></p>
+                <p class="pcap"><b>Sixteen automatically generated explainer videos.</b>
+                    <span>The montage is pre-rendered from the evaluation outputs; the complete two-minute videos, including narration, are available in the gallery below.</span></p>
             </div>
         </section>
 
         <!-- How it works -->
         <section id="how" class="main special">
             <header class="major">
-                <h1 style="text-align:left;">What is PaperReel?</h1>
+                <h1 style="text-align:left;">System Design</h1>
                 <p class="section-lede">
                     <b>PaperReel</b> is an <b>AI agent skill</b>: a natural-language
                     specification (<code>SKILL.md</code>) that defines the generation workflow, its quality rules,
@@ -172,17 +174,17 @@
             </div>
 
             <header class="major" style="margin-top:2.5em">
-                <h2 style="text-align:left;">Every explainer answers the same 8 questions</h2>
+                <h2 style="text-align:left;">The narrative schema</h2>
             </header>
             <ul class="beats">
-                <li><b>1 · Hook / Title</b> · 0–10s<br>title card — why should you care?</li>
-                <li><b>2 · Problem</b> · 10–25s<br>statement overlay — what does it solve?</li>
-                <li><b>3 · Method</b> · 25–55s<br>the paper's own pipeline diagram</li>
-                <li><b>4 · Experiments</b> · 55–70s<br>main figure — what was run?</li>
-                <li><b>5 · Results</b> · 70–90s<br>result figure/table — the key number</li>
-                <li><b>6 · Contributions</b> · 90–102s<br>contribution cards, 2–3 distinct</li>
-                <li><b>7 · Insight</b> · 102–112s<br>statement overlay — what it teaches</li>
-                <li><b>8 · Takeaway</b> · 112–120s<br>closing card, one line</li>
+                <li><b>1 · Hook / Title</b> · 0–10s<br>Title card introducing the paper</li>
+                <li><b>2 · Problem</b> · 10–25s<br>Statement overlay motivating the problem</li>
+                <li><b>3 · Method</b> · 25–55s<br>The paper's own pipeline diagram</li>
+                <li><b>4 · Experiments</b> · 55–70s<br>The paper's main experimental figure</li>
+                <li><b>5 · Results</b> · 70–90s<br>Result figure or table with the key finding</li>
+                <li><b>6 · Contributions</b> · 90–102s<br>Cards summarizing the distinct contributions</li>
+                <li><b>7 · Insight</b> · 102–112s<br>Statement overlay on the broader implication</li>
+                <li><b>8 · Takeaway</b> · 112–120s<br>Closing card with the central message</li>
             </ul>
             <p style="font-size:92%; color:#8a8aa0; text-align:left; margin-top:1em">
                 Each beat's time allocation, anchoring evidence figure, and on-screen text budget are fixed by
@@ -194,11 +196,12 @@
         <!-- Paper gallery -->
         <section id="papers" class="main special">
             <header class="major">
-                <h1 style="text-align:left;">20 sample explainers from a 30-paper ACL 2026 batch</h1>
+                <h1 style="text-align:left;">Generated Explainer Videos</h1>
                 <p class="section-lede">
-                    Twenty of the thirty 2-minute explainers from our evaluation batch, each produced end-to-end by
-                    the same skill from the paper's PDF (GPT-5.5 backend, fixed visual system). <em>Unmute for
-                    narration.</em></p>
+                    The following twenty videos are drawn from our evaluation on 30 papers from ACL 2026.
+                    Each two-minute video was produced end-to-end by the same skill from the paper's PDF, with
+                    GPT-5.5 as the backend language model under a fixed visual system. The videos are muted by
+                    default; narration can be enabled with the volume control.</p>
             </header>
             <ul class="features-4column" style="margin-top:-1em">
                 <li>

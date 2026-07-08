@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <!--
     Page template: Stellar by HTML5 UP (html5up.net, CCA 3.0) — reused from the MineDojo site style.
-    Content: Paper2Video — automatic paper-to-video explainers built on HyperFrames.
+    Content: PaperReel — a skill turning research papers into time-scalable explainer videos (HyperFrames).
 -->
 <html>
 <head>
-    <title>Paper2Video — turn any paper into a narrated explainer video</title>
+    <title>PaperReel: A Skill for Turning Research Papers into Time-Scalable Explainer Videos</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content="Paper2Video (PaperReel) is an AI agent skill that turns a research paper PDF into a narrated explainer video of any target duration — reusing the paper's own figures as evidence, validated by deterministic gates, rendered by HyperFrames, with a talking-head avatar narrator."/>
+    <meta name="description" content="PaperReel is an AI agent skill that turns a research paper PDF into a narrated explainer video of any target duration — reusing the paper's own figures as evidence, validated by deterministic gates, rendered by HyperFrames, with a talking-head avatar narrator."/>
     <link rel="stylesheet" href="assets/css/main.css"/>
     <link rel="stylesheet" href="assets/css/video_gallery.css"/>
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
@@ -35,8 +35,9 @@
         #header h1 { font-size: clamp(3rem, 7vw, 5.4rem); line-height:.95; font-weight: 800;
             letter-spacing: -.02em; margin: 0; text-shadow: 0 4px 30px rgba(0,0,0,.85); }
         #header .tagline { font-size: 1.45em; font-weight: 300; color: #d7c7f5; margin: .6em 0 .2em; }
-        #header .sub { font-family: 'Courier New', monospace; letter-spacing: .18em; font-size: .8em;
-            color: #9d8fd0; text-transform: uppercase; }
+        #header .authors { font-size: 1.02em; color: #e8e2f8; margin: 1.1em 0 .15em; }
+        #header .authors sup { color: #b7a6e8; }
+        #header .affil { font-size: .82em; color: #9d8fd0; margin: 0; }
         #header .badges { margin-top: 1.2em; }
         #header .badges a { display:inline-block; margin:.25em .4em; padding:.45em 1em; border-radius:999px;
             border:1px solid rgba(255,255,255,.28); color:#f4f6fb; font-size:.8em; letter-spacing:.04em;
@@ -102,9 +103,10 @@
 
     <!-- Header: compact, transparent — page background shows through -->
     <header id="header" class="alt">
-        <h1>Paper2Video</h1>
-        <p class="tagline">An agent skill that turns any research paper into a narrated explainer video</p>
-        <p class="sub">PaperReel · built on HyperFrames · time-scalable by design</p>
+        <h1>PaperReel</h1>
+        <p class="tagline">A Skill for Turning Research Papers into Time-Scalable Explainer Videos</p>
+        <p class="authors">Junfeng Yan<sup>1</sup>, Biao Wu<sup>1</sup>, Meng Fang<sup>2</sup>, Ling Chen<sup>1</sup></p>
+        <p class="affil"><sup>1</sup>Australian Artificial Intelligence Institute, Sydney, Australia&ensp;·&ensp;<sup>2</sup>University of Liverpool, Liverpool, United Kingdom</p>
     </header>
 
     <!-- Single merged nav -->
@@ -135,7 +137,7 @@
                         <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
                     </video>
                 </div>
-                <p class="pcap"><b>Paper2Video — zoom-out montage</b>
+                <p class="pcap"><b>PaperReel — zoom-out montage</b>
                     <span>16 of the 30 auto-generated ACL 2026 explainers; full 2-minute videos with narration below</span></p>
             </div>
         </section>
@@ -143,9 +145,9 @@
         <!-- How it works -->
         <section id="how" class="main special">
             <header class="major">
-                <h1 style="text-align:left;">What is Paper2Video?</h1>
+                <h1 style="text-align:left;">What is PaperReel?</h1>
                 <p class="section-lede">
-                    Paper2Video (<b>PaperReel</b> in the paper) is an <b>AI agent skill</b>: a natural-language
+                    <b>PaperReel</b> is an <b>AI agent skill</b>: a natural-language
                     specification (<code>SKILL.md</code>) that defines the generation workflow, its quality rules,
                     and its validation gates — executed by an AI coding agent (Claude Code in our implementation)
                     on top of <b>HyperFrames</b>' composition format and deterministic renderer. It converts a
@@ -288,7 +290,7 @@
     <footer id="footer">
         <section>
             <h2>About</h2>
-            <p style="text-align:left">Paper2Video (PaperReel) is an AI agent skill built on
+            <p style="text-align:left">PaperReel is an AI agent skill built on
                 <b>HyperFrames</b> (write HTML, render video deterministically). The paper's own figures and
                 tables are extracted and contamination-screened, an 8-beat narration is drafted and
                 review-revised against the extracted evidence, the composition passes deterministic preflight /

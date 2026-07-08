@@ -5,10 +5,10 @@
 -->
 <html>
 <head>
-    <title>Paper2Video — turn any paper into a 60-second explainer</title>
+    <title>Paper2Video — turn any paper into a narrated explainer video</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content="Paper2Video automatically turns a research paper into a 60-second animated explainer video — extracting figures, writing an 8-beat script, narrating it, and adding an optional talking-head avatar. Built on HyperFrames."/>
+    <meta name="description" content="Paper2Video (PaperReel) is an AI agent skill that turns a research paper PDF into a narrated explainer video of any target duration — reusing the paper's own figures as evidence, validated by deterministic gates, rendered by HyperFrames, with a talking-head avatar narrator."/>
     <link rel="stylesheet" href="assets/css/main.css"/>
     <link rel="stylesheet" href="assets/css/video_gallery.css"/>
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
@@ -16,11 +16,24 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
     <style>
         /* ---- Paper2Video theme overrides (dark, academic) ---- */
-        #header.alt {
-            background: radial-gradient(1200px 700px at 30% 10%, #2b0a3a 0%, #140a2b 45%, #070611 100%);
-            color: #f4f6fb;
+        /* full-page generated background (MineDojo-style) */
+        html, body {
+            background: #0a0a16 url('images/page_bg.png') center top / cover no-repeat fixed;
         }
-        #header h1 { font-size: 3.4em; font-weight: 800; letter-spacing: -.02em; margin: 0; }
+        /* compact, fully transparent title area — page background shows through */
+        #header.alt {
+            background: transparent;
+            color: #f4f6fb;
+            position: relative;
+            padding: 4.2em 2em 2.8em;
+        }
+        #header.alt:before { /* subtle scrim so the title owns the busy background */
+            content:""; position:absolute; inset:0; z-index:0;
+            background:radial-gradient(circle at 50% 35%, rgba(166,75,244,.18), rgba(10,10,22,.45) 58%, rgba(10,10,22,.7));
+        }
+        #header.alt > * { position:relative; z-index:1; }
+        #header h1 { font-size: clamp(3rem, 7vw, 5.4rem); line-height:.95; font-weight: 800;
+            letter-spacing: -.02em; margin: 0; text-shadow: 0 4px 30px rgba(0,0,0,.85); }
         #header .tagline { font-size: 1.45em; font-weight: 300; color: #d7c7f5; margin: .6em 0 .2em; }
         #header .sub { font-family: 'Courier New', monospace; letter-spacing: .18em; font-size: .8em;
             color: #9d8fd0; text-transform: uppercase; }
@@ -29,58 +42,55 @@
             border:1px solid rgba(255,255,255,.28); color:#f4f6fb; font-size:.8em; letter-spacing:.04em;
             text-decoration:none; }
         #header .badges a:hover { background:rgba(255,255,255,.12); }
-        .vidwrap { background:#000; border-radius:12px; overflow:hidden; box-shadow:0 18px 50px rgba(0,0,0,.35); }
+        /* glass nav bridging dark hero and white card */
+        #nav { background:rgba(255,255,255,.88); backdrop-filter:blur(14px);
+            box-shadow:0 12px 36px rgba(0,0,0,.22); border:1px solid rgba(255,255,255,.45); }
+        #nav a.active { background:linear-gradient(135deg,#a64bf4,#f4708e); color:#fff !important;
+            box-shadow:0 8px 20px rgba(166,75,244,.28); }
+        /* content card + section rhythm */
+        #main { background:rgba(255,255,255,.96); backdrop-filter:blur(10px);
+            box-shadow:0 32px 90px rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.55); }
+        #main > .main { padding-top:4.5em; padding-bottom:4.5em; }
+        header.major { margin-bottom:2em; }
+        header.major p { margin-top:.75em; }
+        .section-lede { font-size:1.08em; line-height:1.75; font-weight:400; color:#555b6e;
+            max-width:62em; margin:.25em 0 0; text-align:left; }
+        .vidwrap { background:linear-gradient(135deg,#111225,#2a174d); border:1px solid rgba(255,255,255,.12);
+            border-radius:12px; overflow:hidden; box-shadow:0 18px 50px rgba(0,0,0,.35); }
         .vidwrap video { display:block; width:100%; border-radius:12px; }
+        /* gallery tiles */
+        .features-4column { margin-top:1.5em !important; }
+        .features-4column li { background:#fff; border:1px solid rgba(80,70,120,.13); border-radius:16px;
+            padding:12px; box-shadow:0 12px 34px rgba(30,20,70,.08);
+            transition:transform .18s ease, box-shadow .18s ease; }
+        .features-4column li:hover { transform:translateY(-3px); box-shadow:0 18px 44px rgba(30,20,70,.14); }
+        .features-4column .vidwrap { border-radius:12px; box-shadow:none; }
         .pcap { font-size: 92%; text-align:left; margin-top:.5em; }
         .pcap b { display:block; font-size:108%; }
         .pcap span { color:#8a8aa0; font-size:90%; }
         /* pipeline */
-        .pipe { display:flex; flex-wrap:wrap; justify-content:center; gap:0; margin:1.5em 0 .5em; }
-        .pstep { flex:1 1 150px; max-width:200px; padding:18px 14px; }
+        .pipe { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; align-items:stretch;
+            position:relative; margin:1.5em 0 .5em; }
+        .pstep { flex:1 1 150px; max-width:200px; padding:18px 14px;
+            background:linear-gradient(180deg,#fff,rgba(246,243,255,.95));
+            border:1px solid rgba(120,90,200,.18); border-radius:16px;
+            box-shadow:0 10px 28px rgba(35,20,80,.08); }
         .pstep .n { width:40px;height:40px;line-height:40px;border-radius:50%;margin:0 auto 10px;
             font-weight:700;color:#fff;background:linear-gradient(135deg,#a64bf4,#f4708e); }
-        .pstep .t { font-weight:700; font-size:.98em; }
-        .pstep .d { font-size:.82em; color:#8a8aa0; margin-top:4px; }
-        .parr { align-self:center; color:#a64bf4; font-size:1.4em; padding:0 2px; }
+        .pstep .t { font-weight:700; font-size:1em; line-height:1.25; color:#323247; }
+        .pstep .d { font-size:.88em; line-height:1.45; color:#6b6b80; margin-top:4px; }
+        .parr { align-self:center; color:#b66cff; font-weight:800; font-size:1.4em; padding:0 2px; }
         /* 8-beat grid */
         .beats { list-style:none; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:1em; }
-        .beats li { background:rgba(120,90,200,.08); border:1px solid rgba(120,90,200,.22);
-            border-radius:12px; padding:16px 16px; text-align:left; }
-        .beats li b { color:#c9b6f5; }
+        .beats li { position:relative; background:linear-gradient(180deg,rgba(120,90,200,.10),rgba(120,90,200,.035));
+            border:1px solid rgba(120,90,200,.22); border-radius:12px; padding:16px 16px 16px 20px;
+            text-align:left; box-shadow:0 8px 24px rgba(40,25,90,.06); }
+        .beats li:before { content:""; position:absolute; left:0; top:14px; bottom:14px; width:4px;
+            border-radius:4px; background:linear-gradient(#a64bf4,#f4708e); }
+        .beats li b { display:block; margin-bottom:.35em; color:#7b4bd6; }
         @media (max-width:980px){ .beats{grid-template-columns:repeat(2,1fr);} .parr{display:none;} }
         @media (max-width:736px){ .beats{grid-template-columns:1fr;} }
-        /* ---- zoom-out video-wall hero ---- */
-        #header.alt.hero {
-            position:relative; min-height:92vh; display:flex; align-items:center; justify-content:center;
-            overflow:hidden; padding:6em 2em;
-            background:#0d0d18 url('assets/hero/hero_poster.jpg') center/cover no-repeat; /* fallback */
-        }
-        .hero-video {
-            position:absolute; inset:0; width:100%; height:100%;
-            object-fit:cover; z-index:0;
-        }
-        .hero-overlay {
-            position:relative; z-index:2; text-align:center; max-width:60em;
-        }
-        #header.alt.hero::after { /* darken for text legibility */
-            content:""; position:absolute; inset:0; z-index:1;
-            background:radial-gradient(ellipse at center, rgba(7,6,17,.25) 0%, rgba(7,6,17,.72) 100%);
-        }
-        .hero-overlay h1 { text-shadow:0 4px 30px rgba(0,0,0,.8); }
-        .hero-overlay .tagline { text-shadow:0 2px 18px rgba(0,0,0,.8); }
-        .hero-actions { margin-top:1.6em; }
-        .hero-actions a {
-            display:inline-block; margin:.3em .5em; padding:.75em 1.8em; border-radius:999px;
-            font-weight:700; letter-spacing:.05em; text-decoration:none; font-size:.9em;
-            border:1px solid rgba(255,255,255,.35); color:#f4f6fb;
-            backdrop-filter:blur(6px); background:rgba(20,10,43,.35);
-            transition:background .2s, transform .2s;
-        }
-        .hero-actions a:hover { background:rgba(166,75,244,.35); transform:translateY(-2px); }
-        .hero-actions a.primary { background:linear-gradient(135deg,#a64bf4,#f4708e); border:none; }
-        .hero-actions a.primary:hover { filter:brightness(1.12); }
         @media (max-width:736px){
-            #header.alt.hero { min-height:70vh; }
             #header h1 { font-size:2.2em; }
             #header .tagline { font-size:1.1em; }
         }
@@ -90,24 +100,14 @@
 
 <div id="wrapper">
 
-    <!-- Header: zoom-out video-wall hero -->
-    <header id="header" class="alt hero">
-        <video class="hero-video" autoplay muted loop playsinline poster="assets/hero/hero_poster.jpg">
-            <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay">
-            <h1>Paper2Video</h1>
-            <p class="tagline">A Claude Code Skill for Scientific Paper-to-Video Generation</p>
-            <p class="sub">Built on HyperFrames · one skill, any paper, any duration</p>
-            <div class="hero-actions">
-                <a href="#intro" class="primary">Watch Demo</a>
-                <a href="#papers">Browse Gallery</a>
-                <a href="#how">How it works</a>
-            </div>
-        </div>
+    <!-- Header: compact, transparent — page background shows through -->
+    <header id="header" class="alt">
+        <h1>Paper2Video</h1>
+        <p class="tagline">An agent skill that turns any research paper into a narrated explainer video</p>
+        <p class="sub">PaperReel · built on HyperFrames · time-scalable by design</p>
     </header>
 
-    <!-- Nav -->
+    <!-- Single merged nav -->
     <nav id="nav">
         <ul>
             <li><a href="#intro" class="active">Overview</a></li>
@@ -124,19 +124,19 @@
         <section id="intro" class="main">
             <div class="content">
                 <header class="major" style="margin-bottom:.6em">
-                    <h2 style="text-align:left;">From one paper to ten — automatically</h2>
-                    <p style="text-align:left; font-size:110%; font-weight:lighter; margin-top:-2em">
-                        One explainer plays in full — problem, method, experiments, results — then pulls back
-                        into a wall of ten ICML 2026 papers, each generated end-to-end with the paper's own
-                        figures and an AI avatar narrator. <em>Unmute for narration.</em></p>
+                    <h2 style="text-align:left;">Research PDFs in. Narrated explainer videos out.</h2>
+                    <p class="section-lede">
+                        Four explainers play up close, then the camera pulls back into a wall of sixteen —
+                        drawn from 30 ACL 2026 papers, each generated end-to-end by the same skill from the
+                        paper's PDF, with the paper's own figures and an AI avatar narrator.</p>
                 </header>
                 <div class="vidwrap">
-                    <video controls loop autoplay muted playsinline preload="metadata">
-                        <source src="videos/promo.mp4" type="video/mp4">
+                    <video controls loop autoplay muted playsinline poster="assets/hero/hero_poster.jpg">
+                        <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
                     </video>
                 </div>
-                <p class="pcap"><b>Paper2Video — 40-second showreel</b>
-                    <span>A single explainer (Reward Hacking Benchmark) opening into the full auto-generated gallery</span></p>
+                <p class="pcap"><b>Paper2Video — zoom-out montage</b>
+                    <span>16 of the 30 auto-generated ACL 2026 explainers; full 2-minute videos with narration below</span></p>
             </div>
         </section>
 
@@ -144,89 +144,140 @@
         <section id="how" class="main special">
             <header class="major">
                 <h1 style="text-align:left;">What is Paper2Video?</h1>
-                <p style="font-size:110%; font-weight:lighter; text-align:left; margin-top:-2em">
-                    Paper2Video reads a research paper and produces a polished 60-second explainer with no
-                    human editing. It extracts the paper's <b>main figure</b> and <b>result tables/plots</b>,
-                    writes a content-rich <b>8-beat narration</b>, lays out an animated
-                    <a href="https://github.com" target="_blank">HyperFrames</a> composition with on-screen
-                    captions and figure call-outs, generates a <b>voiceover</b>, renders the video, and
-                    optionally composites a <b>talking-head avatar</b> narrator in the corner.</p>
+                <p class="section-lede">
+                    Paper2Video (<b>PaperReel</b> in the paper) is an <b>AI agent skill</b>: a natural-language
+                    specification (<code>SKILL.md</code>) that defines the generation workflow, its quality rules,
+                    and its validation gates — executed by an AI coding agent (Claude Code in our implementation)
+                    on top of <b>HyperFrames</b>' composition format and deterministic renderer. It converts a
+                    paper PDF into a narrated explainer of a <b>caller-specified target duration</b> (two minutes
+                    in our experiments) by authoring an inspectable <b>HTML/CSS/JS web composition</b>. Rather
+                    than generating slides or synthesizing frames, the skill <b>extracts, validates, and reuses
+                    the paper's own figures and tables</b> as the primary evidence — with an explicit
+                    figure-contamination screen — and checks every output with a <b>deterministic validation
+                    suite</b> before the expensive rendering and avatar stages.</p>
             </header>
 
             <div class="pipe">
-                <div class="pstep"><div class="n">1</div><div class="t">Read paper</div><div class="d">parse PDF text</div></div>
+                <div class="pstep"><div class="n">1</div><div class="t">Paper understanding</div><div class="d">parse PDF · crop figures & tables · contamination screen</div></div>
                 <div class="parr">→</div>
-                <div class="pstep"><div class="n">2</div><div class="t">Extract figures</div><div class="d">main figure · result table/plot</div></div>
+                <div class="pstep"><div class="n">2</div><div class="t">Script & storyboard</div><div class="d">8-beat schema · evidence-grounded LLM review</div></div>
                 <div class="parr">→</div>
-                <div class="pstep"><div class="n">3</div><div class="t">8-beat script</div><div class="d">+ TTS voiceover</div></div>
+                <div class="pstep"><div class="n">3</div><div class="t">Web composition</div><div class="d">HTML/CSS/JS + GSAP · avatar-safe layout · cached decorative background</div></div>
                 <div class="parr">→</div>
-                <div class="pstep"><div class="n">4</div><div class="t">HyperFrames</div><div class="d">animated scenes + captions</div></div>
+                <div class="pstep"><div class="n">4</div><div class="t">Deterministic validation</div><div class="d">preflight · DOM-geometry · media gates block bad runs</div></div>
                 <div class="parr">→</div>
-                <div class="pstep"><div class="n">5</div><div class="t">Render + avatar</div><div class="d">60s video, optional narrator</div></div>
+                <div class="pstep"><div class="n">5</div><div class="t">Render & assemble</div><div class="d">headless deterministic render · Kokoro TTS · talking-head avatar</div></div>
             </div>
 
             <header class="major" style="margin-top:2.5em">
                 <h2 style="text-align:left;">Every explainer answers the same 8 questions</h2>
             </header>
             <ul class="beats">
-                <li><b>1 · Hook</b><br>why should you care?</li>
-                <li><b>2 · Problem</b><br>what does it solve / evaluate?</li>
-                <li><b>3 · Method</b><br>what does it propose?</li>
-                <li><b>4 · Experiments</b><br>what was run?</li>
-                <li><b>5 · Results</b><br>the key number / trend</li>
-                <li><b>6 · Contributions</b><br>2–3 distinct ones</li>
-                <li><b>7 · Insight</b><br>what it teaches us</li>
-                <li><b>8 · Takeaway</b><br>one closing line</li>
+                <li><b>1 · Hook / Title</b> · 0–10s<br>title card — why should you care?</li>
+                <li><b>2 · Problem</b> · 10–25s<br>statement overlay — what does it solve?</li>
+                <li><b>3 · Method</b> · 25–55s<br>the paper's own pipeline diagram</li>
+                <li><b>4 · Experiments</b> · 55–70s<br>main figure — what was run?</li>
+                <li><b>5 · Results</b> · 70–90s<br>result figure/table — the key number</li>
+                <li><b>6 · Contributions</b> · 90–102s<br>contribution cards, 2–3 distinct</li>
+                <li><b>7 · Insight</b> · 102–112s<br>statement overlay — what it teaches</li>
+                <li><b>8 · Takeaway</b> · 112–120s<br>closing card, one line</li>
             </ul>
+            <p style="font-size:92%; color:#8a8aa0; text-align:left; margin-top:1em">
+                Each beat's time allocation, anchoring evidence figure, and on-screen text budget are fixed by
+                the schema and <b>scale with the target duration</b>; the color theme is derived from the dominant
+                hue of the paper's main figure. A second evidence-grounded review pass checks factual grounding,
+                contribution coverage, and text–figure alignment before the narration is adopted.</p>
         </section>
 
         <!-- Paper gallery -->
         <section id="papers" class="main special">
             <header class="major">
-                <h1 style="text-align:left;">10 ICML 2026 papers, auto-explained</h1>
-                <p style="font-size:110%; font-weight:lighter; text-align:left; margin-top:-2em">
-                    Each video was produced by the same automated pipeline from the paper's PDF.</p>
+                <h1 style="text-align:left;">20 sample explainers from a 30-paper ACL 2026 batch</h1>
+                <p class="section-lede">
+                    Twenty of the thirty 2-minute explainers from our evaluation batch, each produced end-to-end by
+                    the same skill from the paper's PDF (GPT-5.5 backend, fixed visual system). <em>Unmute for
+                    narration.</em></p>
             </header>
             <ul class="features-4column" style="margin-top:-1em">
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p01.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>Reward Hacking Benchmark</b><span>Measuring exploits in LLM tool agents · <a href="https://arxiv.org/abs/2605.02964" target="_blank">arXiv:2605.02964</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n01.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>OctoTools</b><span>Extensible tool-based multi-agent framework for complex reasoning · <a href="https://arxiv.org/abs/2502.11271" target="_blank">arXiv:2502.11271</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p02.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>A Science of AI Agent Reliability</b><span>Beyond a single accuracy score · <a href="https://arxiv.org/abs/2602.16666" target="_blank">arXiv:2602.16666</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n06.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>AgentRouter</b><span>Knowledge-graph-guided LLM router for multi-agent QA · <a href="https://arxiv.org/abs/2510.05445" target="_blank">arXiv:2510.05445</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p03.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>The Expert Strikes Back</b><span>Interpreting Mixture-of-Experts LLMs · <a href="https://arxiv.org/abs/2604.02178" target="_blank">arXiv:2604.02178</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n24.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>NavA³</b><span>Understand any instruction, navigate anywhere, find anything · <a href="https://arxiv.org/abs/2508.04598" target="_blank">arXiv:2508.04598</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p04.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>Scaling Video Understanding</b><span>Latent multi-agent collaboration (MACF) · <a href="https://arxiv.org/abs/2605.00444" target="_blank">arXiv:2605.00444</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n23.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Paper2Poster</b><span>Multimodal poster automation from scientific papers · <a href="https://arxiv.org/abs/2505.21497" target="_blank">arXiv:2505.21497</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p05.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>Entropy-informed Decoding (EDEN)</b><span>Adaptive information-driven branching · <a href="https://arxiv.org/abs/2605.09745" target="_blank">arXiv:2605.09745</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n09.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>SFTMix</b><span>Elevating instruction tuning with a Mixup recipe · <a href="https://arxiv.org/abs/2410.05248" target="_blank">arXiv:2410.05248</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p06.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>STEER</b><span>Structured event evidence for video reasoning · <a href="https://arxiv.org/abs/2604.04415" target="_blank">arXiv:2604.04415</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n12.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>ReEx-SQL</b><span>Execution-aware reinforcement learning for text-to-SQL · <a href="https://arxiv.org/abs/2505.12768" target="_blank">arXiv:2505.12768</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p07.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>Why Diffusion LMs Struggle</b><span>with truly parallel decoding · <a href="https://arxiv.org/abs/2602.23225" target="_blank">arXiv:2602.23225</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n04.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Uni-MMMU</b><span>Massive multi-discipline multimodal unified benchmark · <a href="https://arxiv.org/abs/2510.13759" target="_blank">arXiv:2510.13759</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p08.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>Say, Dream, and Act</b><span>Video world models for robot manipulation · <a href="https://arxiv.org/abs/2602.10717" target="_blank">arXiv:2602.10717</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n16.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>REDI</b><span>Reinforcement distillation harnessing negative teacher signals · <a href="https://arxiv.org/abs/2505.24850" target="_blank">arXiv:2505.24850</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p09.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>VGGRPO</b><span>World-consistent video gen · 4D latent reward · <a href="https://arxiv.org/abs/2603.26599" target="_blank">arXiv:2603.26599</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n27.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>KAPPA</b><span>Inference-time chain-of-thought pruning with latent signals · <a href="https://arxiv.org/abs/2511.00699" target="_blank">arXiv:2511.00699</a></span></p>
                 </li>
                 <li>
-                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/p10.mp4" type="video/mp4"></video></div>
-                    <p class="pcap"><b>AnyBand-Diff</b><span>Physics-aware remote-sensing generation · <a href="https://arxiv.org/abs/2605.14341" target="_blank">arXiv:2605.14341</a></span></p>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n29.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>MemBuilder</b><span>Reinforcing LLMs for long-term memory construction · <a href="https://arxiv.org/abs/2601.05488" target="_blank">arXiv:2601.05488</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n02.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>PosterForest</b><span>Hierarchical multi-agent collaboration for scientific posters · <a href="https://arxiv.org/abs/2508.21720" target="_blank">arXiv:2508.21720</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n05.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>MathFlow</b><span>Enhancing the perceptual flow of MLLMs for visual math problems · <a href="https://arxiv.org/abs/2503.16549" target="_blank">arXiv:2503.16549</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n08.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>MMSearch-R1</b><span>Incentivizing large multimodal models to search · <a href="https://arxiv.org/abs/2506.20670" target="_blank">arXiv:2506.20670</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n10.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>CodeHacker</b><span>Automated test-case generation for vulnerability detection · <a href="https://arxiv.org/abs/2602.20213" target="_blank">arXiv:2602.20213</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n13.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>MemReasoner</b><span>Memory-augmented LMs on reasoning-in-a-haystack tasks · <a href="https://arxiv.org/abs/2503.07903" target="_blank">arXiv:2503.07903</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n15.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>CachePrune</b><span>Teaching LLMs what not to follow via KV-cache editing · <a href="https://arxiv.org/abs/2504.21228" target="_blank">arXiv:2504.21228</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n21.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>LS-Mixture</b><span>Long-short chain-of-thought mixture supervised fine-tuning · <a href="https://arxiv.org/abs/2505.03469" target="_blank">arXiv:2505.03469</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n22.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Step Pruner</b><span>Efficient and accurate reasoning beyond token length · <a href="https://arxiv.org/abs/2510.03805" target="_blank">arXiv:2510.03805</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n26.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>ZoomR</b><span>Memory-efficient reasoning via multi-granularity KV retrieval · <a href="https://arxiv.org/abs/2604.10898" target="_blank">arXiv:2604.10898</a></span></p>
+                </li>
+                <li>
+                    <div class="vidwrap"><video controls loop muted playsinline preload="metadata"><source src="videos/n30.mp4" type="video/mp4"></video></div>
+                    <p class="pcap"><b>Agent Self-Evolution</b><span>Spontaneous reward-free self-evolution via world knowledge · <a href="https://arxiv.org/abs/2604.18131" target="_blank">arXiv:2604.18131</a></span></p>
                 </li>
             </ul>
         </section>
@@ -237,10 +288,13 @@
     <footer id="footer">
         <section>
             <h2>About</h2>
-            <p style="text-align:left">Paper2Video is an automated paper-to-video pipeline built on
-                <b>HyperFrames</b> (write HTML, render video). Figures and tables are extracted from each PDF,
-                an 8-beat narration is written and voiced, an animated composition is rendered, and an optional
-                realistic talking-head avatar is composited in the corner.</p>
+            <p style="text-align:left">Paper2Video (PaperReel) is an AI agent skill built on
+                <b>HyperFrames</b> (write HTML, render video deterministically). The paper's own figures and
+                tables are extracted and contamination-screened, an 8-beat narration is drafted and
+                review-revised against the extracted evidence, the composition passes deterministic preflight /
+                DOM-layout / media gates, and the result is rendered with Kokoro TTS narration and a
+                talking-head avatar. Evaluated on 30 ACL 2026 papers across GPT-5.5, Claude Opus 4.8, and
+                Grok-4.1-Fast backends.</p>
         </section>
         <section>
             <h2>Links</h2>

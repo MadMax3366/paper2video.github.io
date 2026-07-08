@@ -55,6 +55,8 @@ def main():
     ap.add_argument("--zoom-end", type=float, default=10.0,
                     help="second at which the zoom-out completes")
     ap.add_argument("--crf", type=int, default=24)
+    ap.add_argument("--speed", type=float, default=1.0,
+                    help="tile playback speed factor (1.35 = 35% faster)")
     ap.add_argument("--title", default="PaperVidSkill")
     ap.add_argument("--slogan",
                     default="A Claude Code Skill for Scientific Paper-to-Video Generation")
@@ -93,9 +95,10 @@ def main():
                     src = cand
                     break
         inputs += ["-ss", str(v.get("start_offset", 0)), "-t",
-                   str(args.duration + 1), "-i", src]
+                   str(args.duration * args.speed + 1), "-i", src]
         filters.append(
-            f"[{i}:v]fps={args.fps},scale={vid_w}:{vid_h},setsar=1,"
+            f"[{i}:v]setpts=PTS/{args.speed},fps={args.fps},"
+            f"scale={vid_w}:{vid_h},setsar=1,"
             f"pad={cell_w}:{cell_h}:{pad_x}:{pad_y}:{BG},"
             f"trim=duration={args.duration},setpts=PTS-STARTPTS[t{i}]")
         tags.append(f"[t{i}]")

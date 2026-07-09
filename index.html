@@ -1,14 +1,14 @@
 <!DOCTYPE HTML>
 <!--
     Page template: Stellar by HTML5 UP (html5up.net, CCA 3.0) — reused from the MineDojo site style.
-    Content: PaperReel — a skill turning research papers into time-scalable explainer videos (HyperFrames).
+    Content: PaperReel — turning research papers into time-scalable explainer videos (HyperFrames).
 -->
 <html>
 <head>
-    <title>PaperReel: A Skill for Turning Research Papers into Time-Scalable Explainer Videos</title>
+    <title>PaperReel: Turning Research Papers into Time-Scalable Explainer Videos</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content="PaperReel is an AI agent skill that turns a research paper PDF into a narrated explainer video of any target duration — reusing the paper's own figures as evidence, validated by deterministic gates, rendered by HyperFrames, with a talking-head avatar narrator."/>
+    <meta name="description" content="PaperReel is a system that turns a research paper PDF into a narrated explainer video of any target duration — reusing the paper's own figures as evidence, validated by deterministic gates, rendered by HyperFrames, with a talking-head avatar narrator."/>
     <link rel="stylesheet" href="assets/css/main.css"/>
     <link rel="stylesheet" href="assets/css/video_gallery.css"/>
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css"/>
@@ -81,6 +81,12 @@
         .pcap { font-size: 92%; text-align:left; margin-top:.5em; }
         .pcap b { display:block; font-size:108%; }
         .pcap span { color:#8a8aa0; font-size:90%; }
+        /* paper figure */
+        .figwrap { margin:1.5em 0 2em; }
+        .figwrap img { display:block; width:100%; border-radius:12px;
+            border:1px solid rgba(80,70,120,.15); box-shadow:0 12px 34px rgba(30,20,70,.10); background:#fff; }
+        .figcap { font-size:.88em; color:#6b6b80; text-align:left; margin:.8em .2em 0; line-height:1.55; }
+        .figcap b { color:#323247; }
         /* pipeline */
         .pipe { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; align-items:stretch;
             position:relative; margin:1.5em 0 .5em; }
@@ -116,9 +122,9 @@
     <!-- Header: compact, transparent — page background shows through -->
     <header id="header" class="alt">
         <h1>PaperReel</h1>
-        <p class="tagline">A Skill for Turning Research Papers into Time-Scalable Explainer Videos</p>
+        <p class="tagline">Turning Research Papers into Time-Scalable Explainer Videos</p>
         <p class="authors">Junfeng Yan<sup>1</sup>, Biao Wu<sup>1</sup>, Meng Fang<sup>2</sup>, Ling Chen<sup>1</sup></p>
-        <p class="affil"><sup>1</sup>Australian Artificial Intelligence Institute, Sydney, Australia&ensp;·&ensp;<sup>2</sup>University of Liverpool, Liverpool, United Kingdom</p>
+        <p class="affil"><sup>1</sup>Australian Artificial Intelligence Institute, University of Technology Sydney, Australia&ensp;·&ensp;<sup>2</sup>University of Liverpool, Liverpool, United Kingdom</p>
     </header>
 
     <!-- Single merged nav -->
@@ -140,19 +146,18 @@
                 <header class="major" style="margin-bottom:.6em">
                     <h2 style="text-align:left;">Overview</h2>
                     <p class="section-lede">
-                        PaperReel is an AI agent skill that converts a research paper into a narrated
-                        explainer video of a caller-specified target duration. The montage below shows sixteen
-                        videos sampled from our 30-paper ACL 2026 evaluation set; every video was generated
-                        end-to-end from the paper's PDF, uses the paper's own figures and tables as visual
-                        evidence, and is narrated by a synthesized voice with a talking-head avatar.</p>
+                        PaperReel is a system that converts a research paper into a narrated explainer
+                        video of a caller-specified target duration. The montage below shows sixteen videos
+                        sampled from our evaluation on 30 publicly available NLP papers from recent ACL-family
+                        venues; every video was generated end-to-end from the paper's PDF, uses the paper's own
+                        figures and tables as visual evidence, and is narrated by a synthesized voice with a
+                        talking-head avatar.</p>
                 </header>
                 <div class="vidwrap">
                     <video controls loop autoplay muted playsinline poster="assets/hero/hero_poster.jpg">
                         <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
                     </video>
                 </div>
-                <p class="pcap"><b>Sixteen automatically generated explainer videos.</b>
-                    <span>The montage is pre-rendered from the evaluation outputs; the complete two-minute videos, including narration, are available in the gallery below.</span></p>
             </div>
         </section>
 
@@ -161,17 +166,27 @@
             <header class="major">
                 <h1 style="text-align:left;">System Design</h1>
                 <p class="section-lede">
-                    <b>PaperReel</b> is an <b>AI agent skill</b>: a natural-language
-                    specification (<code>SKILL.md</code>) that defines the generation workflow, its quality rules,
-                    and its validation gates — executed by an AI coding agent (Claude Code in our implementation)
-                    on top of <b>HyperFrames</b>' composition format and deterministic renderer. It converts a
-                    paper PDF into a narrated explainer of a <b>caller-specified target duration</b> (two minutes
-                    in our experiments) by authoring an inspectable <b>HTML/CSS/JS web composition</b>. Rather
-                    than generating slides or synthesizing frames, the skill <b>extracts, validates, and reuses
-                    the paper's own figures and tables</b> as the primary evidence — with an explicit
-                    figure-contamination screen — and checks every output with a <b>deterministic validation
-                    suite</b> before the expensive rendering and avatar stages.</p>
+                    PaperReel is built on <b>HyperFrames</b>' composition format and deterministic renderer,
+                    and is implemented as an agent skill: a natural-language specification
+                    (<code>SKILL.md</code>) defines the generation workflow, its quality rules, and its
+                    validation gates, and any capable AI coding agent can execute it — Claude Code in our
+                    implementation. The system turns a paper PDF into a narrated explainer video of a
+                    <b>caller-specified target duration</b> (two minutes in all our experiments) by authoring an
+                    inspectable <b>HTML/CSS/JS web composition</b> with the paper's own embedded figures. Rather
+                    than generating slides or synthesizing frames, it <b>extracts, validates, and reuses the
+                    paper's own figures and tables</b> as the primary evidence — with an explicit
+                    figure-contamination screen — and a <b>deterministic validation suite</b> gates the workflow
+                    so that layout and media defects are caught before the costly rendering and avatar
+                    stages.</p>
             </header>
+
+            <div class="figwrap">
+                <img src="images/pipeline_fig.jpg" alt="The PaperReel workflow: paper understanding and visual evidence extraction, script and storyboard authoring with evidence-grounded review, web composition authoring, deterministic validation, and rendering with TTS narration and a talking-head avatar."/>
+                <p class="figcap"><b>The PaperReel workflow.</b> Paper understanding and visual evidence
+                    extraction, script and storyboard authoring with evidence-grounded review, web composition
+                    authoring, deterministic validation, and rendering with TTS narration and a talking-head
+                    avatar.</p>
+            </div>
 
             <div class="pipe">
                 <div class="pstep"><div class="n">1</div><div class="t">Paper understanding</div><div class="d">parse PDF · crop figures & tables · contamination screen</div></div>
@@ -210,8 +225,9 @@
             <header class="major">
                 <h1 style="text-align:left;">Generated Explainer Videos</h1>
                 <p class="section-lede">
-                    The following twenty videos are drawn from our evaluation on 30 papers from ACL 2026.
-                    Each two-minute video was produced end-to-end by the same skill from the paper's PDF, with
+                    The following twenty videos are drawn from our evaluation on 30 publicly available NLP
+                    papers from recent ACL-family venues. Each two-minute video was produced end-to-end by the
+                    same system from the paper's PDF, with
                     GPT-5.5 as the backend language model under a fixed visual system. The videos are muted by
                     default; narration can be enabled with the volume control.</p>
             </header>
@@ -305,12 +321,12 @@
     <footer id="footer">
         <section>
             <h2>About</h2>
-            <p style="text-align:left">PaperReel is an AI agent skill built on
+            <p style="text-align:left">PaperReel is a system built on
                 <b>HyperFrames</b> (write HTML, render video deterministically). The paper's own figures and
                 tables are extracted and contamination-screened, an 8-beat narration is drafted and
                 review-revised against the extracted evidence, the composition passes deterministic preflight /
                 DOM-layout / media gates, and the result is rendered with Kokoro TTS narration and a
-                talking-head avatar. Evaluated on 30 ACL 2026 papers across GPT-5.5, Claude Opus 4.8, and
+                talking-head avatar. Evaluated on 30 publicly available NLP papers from recent ACL-family venues across GPT-5.5, Claude Opus 4.8, and
                 Grok-4.1-Fast backends.</p>
         </section>
         <section>

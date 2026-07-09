@@ -75,7 +75,7 @@
         #nav ul li a.active { background:linear-gradient(135deg,#a64bf4,#f4708e); color:#fff !important;
             box-shadow:0 8px 20px rgba(166,75,244,.28); }
         #nav + #main { padding-top:0 !important; margin-top:0; }
-        #main > .main:first-child { padding-top:2em; }
+        #main > .main:first-child { padding-top:1.2em; }
         /* content card + section rhythm */
         #main { background:rgba(255,255,255,.97);
             box-shadow:0 32px 90px rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.55); }
@@ -159,21 +159,21 @@
         <!-- Hero -->
         <section id="intro" class="main">
             <div class="content">
+                <div class="vidwrap" style="margin-bottom:1.6em">
+                    <video controls loop autoplay muted playsinline poster="assets/hero/hero_poster.jpg">
+                        <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
+                    </video>
+                </div>
                 <header class="major" style="margin-bottom:.6em">
                     <h2 style="text-align:left;">Overview</h2>
                     <p class="section-lede">
                         PaperReel is a system that converts a research paper into a narrated explainer
-                        video of a caller-specified target duration. The montage below shows sixteen videos
+                        video of a caller-specified target duration. The montage above shows sixteen videos
                         sampled from our evaluation on 30 publicly available NLP papers from recent ACL-family
                         venues; every video was generated end-to-end from the paper's PDF, uses the paper's own
                         figures and tables as visual evidence, and is narrated by a synthesized voice with a
                         talking-head avatar.</p>
                 </header>
-                <div class="vidwrap">
-                    <video controls loop autoplay muted playsinline poster="assets/hero/hero_poster.jpg">
-                        <source src="assets/hero/hero_mosaic.mp4" type="video/mp4">
-                    </video>
-                </div>
             </div>
         </section>
 

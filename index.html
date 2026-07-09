@@ -36,8 +36,14 @@
             background:radial-gradient(circle at 50% 35%, rgba(10,10,22,.28), rgba(10,10,22,.10) 55%, rgba(10,10,22,0));
         }
         #header.alt > * { position:relative; z-index:1; }
-        #header h1 { font-size: clamp(3rem, 7vw, 5.4rem); line-height:.95; font-weight: 800;
-            letter-spacing: -.02em; margin: 0; text-shadow: 0 4px 30px rgba(0,0,0,.85); }
+        #header h1 {
+            font-size: clamp(3.6rem, 9vw, 7.2rem); line-height:.95; font-weight: 900;
+            letter-spacing:-.03em; margin:0;
+            background:linear-gradient(100deg, #8fd8ff 0%, #b06cf8 42%, #f4708e 100%);
+            -webkit-background-clip:text; background-clip:text;
+            color:transparent; -webkit-text-fill-color:transparent;
+            filter:drop-shadow(0 6px 34px rgba(166,75,244,.5)) drop-shadow(0 2px 8px rgba(0,0,0,.6));
+        }
         #header .tagline { font-size: 1.45em; font-weight: 300; color: #d7c7f5; margin: .6em 0 .2em; }
         #header .authors { font-size: 1.02em; color: #e8e2f8; margin: 1.1em 0 .15em; }
         #header .authors sup { color: #b7a6e8; }
@@ -47,9 +53,10 @@
             border:1px solid rgba(255,255,255,.28); color:#f4f6fb; font-size:.8em; letter-spacing:.04em;
             text-decoration:none; }
         #header .badges a:hover { background:rgba(255,255,255,.12); }
-        /* nav: static bar seated on top of the content card */
+        /* nav: seated on the content card, pins to viewport top on scroll */
         #nav, #nav.alt {
-            position:static !important; top:auto !important;
+            position:-webkit-sticky !important; position:sticky !important; top:0 !important;
+            z-index:10000;
             width:70em; max-width:calc(100% - 4em); margin:0 auto -1px;
             background:#ffffff; border:1px solid rgba(0,0,0,.07); border-bottom:0;
             box-shadow:0 -10px 30px rgba(0,0,0,.12);
@@ -219,6 +226,18 @@
                 the schema and <b>scale with the target duration</b>; the color theme is derived from the dominant
                 hue of the paper's main figure. A second evidence-grounded review pass checks factual grounding,
                 contribution coverage, and text–figure alignment before the narration is adopted.</p>
+
+            <header class="major" style="margin-top:2.5em">
+                <h2 style="text-align:left;">A complete run on a real paper</h2>
+            </header>
+            <div class="figwrap">
+                <img src="images/demo_fig.jpg" alt="PaperReel demonstration on a real run (OctoTools): the input paper is turned into intermediate artifacts (contamination-screened evidence figure, reviewed narration script, cached decorative background) and a final explainer video whose method and results scenes present the paper's own figures with a talking-head avatar and captions."/>
+                <p class="figcap"><b>PaperReel demonstration on a real run (OctoTools).</b> The input paper
+                    (left) is turned into intermediate artifacts (middle: contamination-screened evidence
+                    figure, reviewed narration script, cached decorative background) and a final explainer
+                    video (right: method and results scenes presenting the paper's own figures with a
+                    talking-head avatar and captions).</p>
+            </div>
         </section>
 
         <!-- Paper gallery -->

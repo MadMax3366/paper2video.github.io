@@ -47,19 +47,20 @@
             border:1px solid rgba(255,255,255,.28); color:#f4f6fb; font-size:.8em; letter-spacing:.04em;
             text-decoration:none; }
         #header .badges a:hover { background:rgba(255,255,255,.12); }
-        /* nav: always visible, pinned while scrolling, solid + readable */
+        /* nav: static bar seated on top of the content card */
         #nav, #nav.alt {
-            position:-webkit-sticky !important; position:sticky !important; top:0 !important;
-            width:70em; max-width:calc(100% - 4em); margin:0 auto;
-            background:#ffffff; border:1px solid rgba(0,0,0,.07);
-            box-shadow:0 10px 30px rgba(0,0,0,.18); z-index:10000;
-            border-radius:0 0 .6em .6em; padding:.7em 1em;
+            position:static !important; top:auto !important;
+            width:70em; max-width:calc(100% - 4em); margin:0 auto -1px;
+            background:#ffffff; border:1px solid rgba(0,0,0,.07); border-bottom:0;
+            box-shadow:0 -10px 30px rgba(0,0,0,.12);
+            border-radius:.6em .6em 0 0; padding:.7em 1em;
         }
         #nav ul li a { color:#2a2a3d !important; opacity:1 !important; }
         #nav ul li a:hover { background:rgba(166,75,244,.12); }
         #nav ul li a.active { background:linear-gradient(135deg,#a64bf4,#f4708e); color:#fff !important;
             box-shadow:0 8px 20px rgba(166,75,244,.28); }
-        #nav + #main { padding-top:1.5em; }
+        #nav + #main { padding-top:0 !important; margin-top:0; }
+        #main > .main:first-child { padding-top:2em; }
         /* content card + section rhythm */
         #main { background:rgba(255,255,255,.97);
             box-shadow:0 32px 90px rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.55); }

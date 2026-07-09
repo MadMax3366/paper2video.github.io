@@ -17,10 +17,11 @@
     <style>
         /* ---- Paper2Video theme overrides (dark, academic) ---- */
         /* full-page generated background (MineDojo-style) */
-        html, body { background: #0a0a16; }
+        html { background: #0a0a16; }
+        body { background: transparent; } /* body bg would paint over the ::before layer */
         body::before { /* fixed background layer — smoother than background-attachment:fixed */
             content:""; position:fixed; inset:0; z-index:-1;
-            background:#0a0a16 url('images/page_bg.png') center top / cover no-repeat;
+            background:#0a0a16 url('images/page_bg_4k.jpg') center / cover no-repeat;
             transform:translateZ(0); will-change:transform;
         }
         /* compact, fully transparent title area — page background shows through */
@@ -32,7 +33,7 @@
         }
         #header.alt:before { /* subtle scrim so the title owns the busy background */
             content:""; position:absolute; inset:0; z-index:0;
-            background:radial-gradient(circle at 50% 35%, rgba(166,75,244,.18), rgba(10,10,22,.45) 58%, rgba(10,10,22,.7));
+            background:radial-gradient(circle at 50% 35%, rgba(10,10,22,.28), rgba(10,10,22,.10) 55%, rgba(10,10,22,0));
         }
         #header.alt > * { position:relative; z-index:1; }
         #header h1 { font-size: clamp(3rem, 7vw, 5.4rem); line-height:.95; font-weight: 800;

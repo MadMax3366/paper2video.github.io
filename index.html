@@ -53,14 +53,22 @@
             border:1px solid rgba(255,255,255,.28); color:#f4f6fb; font-size:.8em; letter-spacing:.04em;
             text-decoration:none; }
         #header .badges a:hover { background:rgba(255,255,255,.12); }
-        /* nav: seated on the content card, pins to viewport top on scroll */
+        /* nav: seated on the content card, pins to viewport top on scroll.
+           The template animates padding/font-size when JS toggles .alt on scroll,
+           which causes a janky resize — freeze both states to identical metrics. */
         #nav, #nav.alt {
             position:-webkit-sticky !important; position:sticky !important; top:0 !important;
             z-index:10000;
             width:70em; max-width:calc(100% - 4em); margin:0 auto -1px;
             background:#ffffff; border:1px solid rgba(0,0,0,.07); border-bottom:0;
             box-shadow:0 -10px 30px rgba(0,0,0,.12);
-            border-radius:.6em .6em 0 0; padding:.7em 1em;
+            border-radius:.6em .6em 0 0;
+            padding:.7em 1em !important;
+            transition:none !important;
+        }
+        #nav ul li, #nav.alt ul li { margin:0 .35em !important; transition:none !important; }
+        #nav ul li a, #nav.alt ul li a {
+            font-size:1.1em !important; padding:0 1em !important; transition:none !important;
         }
         #nav ul li a { color:#2a2a3d !important; opacity:1 !important; }
         #nav ul li a:hover { background:rgba(166,75,244,.12); }

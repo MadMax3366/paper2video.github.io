@@ -148,6 +148,7 @@
         <ul>
             <li><a href="#intro" class="active">Overview</a></li>
             <li><a href="#how">How it works</a></li>
+            <li><a href="#eval">Evaluation</a></li>
             <li><a href="#papers">Papers</a></li>
             <li><a href="https://github.com/MadMax3366/paper2video.github.io" target="_blank">GitHub</a></li>
         </ul>
@@ -245,6 +246,28 @@
                     figure, reviewed narration script, cached decorative background) and a final explainer
                     video (right: method and results scenes presenting the paper's own figures with a
                     talking-head avatar and captions).</p>
+            </div>
+        </section>
+
+        <!-- Evaluation -->
+        <section id="eval" class="main special">
+            <header class="major">
+                <h1 style="text-align:left;">Evaluation</h1>
+                <p class="section-lede">
+                    Each generated video is scored along four quality axes. <b>Fidelity</b> is computed by a
+                    code pipeline that extracts claims from the narration and captions and checks entailment
+                    against the source paper; <b>Comprehension</b>, <b>Presentation Quality</b>, and
+                    <b>Visual Richness</b> are scored by a vision&ndash;language evaluator (Qwen3-VL) under a
+                    fixed rubric. System <b>Reliability</b> is reported from the deterministic validation
+                    gates. All backend language models are evaluated under the identical protocol with the
+                    composition layout and visual assets held constant.</p>
+            </header>
+            <div class="figwrap">
+                <img src="images/eval_fig.jpg" alt="The PaperReel evaluation protocol: each generated video is scored by a code-based fidelity check (claim extraction and entailment against the paper), a vision-language judge (Qwen3-VL) for comprehension, presentation quality, and visual richness, and the deterministic validation suite."/>
+                <p class="figcap"><b>The PaperReel evaluation protocol.</b> Each generated video is scored by
+                    a code-based fidelity check (claim extraction and entailment against the paper), a
+                    vision&ndash;language judge (Qwen3-VL) for comprehension, presentation quality, and visual
+                    richness, and the deterministic validation suite.</p>
             </div>
         </section>
 

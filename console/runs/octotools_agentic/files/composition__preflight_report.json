@@ -1,0 +1,10 @@
+{
+  "dir": "composition",
+  "n_subtitles": 18,
+  "has_main_figure": true,
+  "has_result_figure": true,
+  "has_background": true,
+  "background_fallback": false,
+  "fails": [],
+  "verdict": "PASS"
+}

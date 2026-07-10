@@ -1,0 +1,60 @@
+{
+  "dir": "/Users/yanjunfeng/paperreel_console_mac/0710_150046_f78c/composition",
+  "avatar_zone": {
+    "x": 1450,
+    "y": 610,
+    "w": 400,
+    "h": 400
+  },
+  "n_elements": 5,
+  "n_samples": 12,
+  "fails": [],
+  "verdict": "PASS",
+  "elements": [
+    {
+      "id": "avatar-reserved",
+      "x": 1450,
+      "y": 610,
+      "w": 400,
+      "h": 400,
+      "fontSize": 16,
+      "text": ""
+    },
+    {
+      "id": "paper-title",
+      "x": 500,
+      "y": 34,
+      "w": 920,
+      "h": 29,
+      "fontSize": 23,
+      "text": "OctoTools: A Multi-Agent Framework with Extensible Tools for Complex Reasoning"
+    },
+    {
+      "id": "scene-label",
+      "x": 80,
+      "y": 50,
+      "w": 203,
+      "h": 39,
+      "fontSize": 34,
+      "text": "TAKEAWAY"
+    },
+    {
+      "id": "body-text",
+      "x": 0,
+      "y": 340,
+      "w": 1920,
+      "h": 204,
+      "fontSize": 16,
+      "text": "Smarter agents aren't bigger models —they're better-organized ones."
+    },
+    {
+      "id": "subtitle",
+      "x": 134,
+      "y": 978,
+      "w": 1173,
+      "h": 56,
+      "fontSize": 24,
+      "text": "give the model a planner, a verifier, and the right tools instead of asking one"
+    }
+  ]
+}

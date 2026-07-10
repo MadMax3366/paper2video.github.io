@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PaperReel Console — Replay</title>
+<style>
+/* type + layout scale with the viewport: 1rem ≈ 15px on a laptop, ~24px on a 4K monitor */
+html{font-size:clamp(15px, 0.55vw + 8px, 26px)}
+:root{
+  --bg:#0D1428; --surface:#151F3A; --raised:#1C294A; --inset:#101A33;
+  --line:#2A3A63; --line2:#39508A; --ink:#F2F6FF; --sub:#B6C2E2; --dim:#8592B4;
+  --cyan:#6FDBFF; --amber:#FFC07A; --green:#6FE8AC; --red:#FF7A88; --glow:rgba(111,219,255,.2);
+  --grid:rgba(140,170,255,.045); --glow1:rgba(102,217,255,.10); --glow2:rgba(243,179,91,.08);
+  --shadow:0 10px 30px rgba(0,0,0,.32);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+:root[data-theme="light"]{
+  --bg:#EDF1F9; --surface:#FFFFFF; --raised:#F2F5FC; --inset:#E7EDF8;
+  --line:#CBD6EC; --line2:#A9BCE3; --ink:#16203E; --sub:#3E4C70; --dim:#68749A;
+  --cyan:#0A6EBD; --amber:#A56110; --green:#0E7D4C; --red:#BE3048; --glow:rgba(10,110,189,.14);
+  --grid:rgba(40,80,170,.05); --glow1:rgba(10,110,189,.07); --glow2:rgba(165,97,16,.06);
+  --shadow:0 8px 24px rgba(60,80,130,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:
+    radial-gradient(circle at 20% 0%, var(--glow1), transparent 32%),
+    radial-gradient(circle at 80% 10%, var(--glow2), transparent 28%),
+    repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 44px),
+    var(--bg);
+  color:var(--ink);font:1rem/1.5 -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  display:flex;flex-direction:column;height:100vh;overflow:hidden}
+/* everything fits the viewport: hero (auto) + main grid (flexes) + artifacts strip (auto);
+   long content scrolls INSIDE its card, never stretches the page */
+.shell{width:100%;margin:0 auto;padding:.6rem 1.6rem .6rem;flex:1;min-height:0;
+  display:grid;grid-template-rows:auto minmax(0,1fr) auto;grid-template-columns:minmax(0,1fr);gap:.6rem}
+button{cursor:pointer;border:1px solid var(--line2);background:var(--raised);color:var(--ink);
+  border-radius:.6rem;padding:.55rem 1rem;font-size:.9rem;font-weight:600}
+button:hover{border-color:var(--cyan)}
+button.primary{background:linear-gradient(135deg,#1c4a72,#173254);border-color:#3d7fb8;color:#9fe6ff;font-weight:700}
+:root[data-theme="light"] button.primary{background:linear-gradient(135deg,#0A6EBD,#0a5a9a);border-color:#0A6EBD;color:#fff}
+button:disabled{opacity:.4;cursor:default}
+input,select{background:var(--inset);border:1px solid var(--line);color:var(--ink);
+  border-radius:.6rem;padding:.55rem .75rem;font-size:.9rem;width:100%}
+.chip{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line2);
+  border-radius:999px;padding:.35rem .95rem;font-size:.85rem;font-weight:700;color:var(--sub)}
+.dot{width:.6rem;height:.6rem;border-radius:50%;background:var(--dim)}
+.dot.ok{background:var(--green);box-shadow:0 0 10px var(--green)}
+.dot.bad{background:var(--red);box-shadow:0 0 10px var(--red)}
+
+header{display:flex;align-items:center;gap:1rem;padding:.55rem 1.6rem;border-bottom:1px solid var(--line)}
+header .logo{color:var(--ink);font-weight:800;font-size:1.7rem;letter-spacing:.01em}
+header .sub{color:var(--dim);font-size:.9rem}
+header .grow{flex:1}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:1rem;padding:1rem 1.2rem;
+  box-shadow:var(--shadow)}
+.card h3{font-size:.85rem;letter-spacing:.14em;color:var(--amber);margin-bottom:.6rem;text-transform:uppercase;font-weight:800}
+
+.grid{display:grid;grid-template-columns:minmax(19rem,23rem) minmax(0,1fr) minmax(20rem,26rem);gap:.6rem;min-height:0;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:.6rem;min-width:0;min-height:0;overflow-y:auto;overflow-x:hidden}
+
+/* ---- pipeline hero ---- */
+#flow{padding:.8rem 1.5rem}
+#flow .head{display:flex;align-items:baseline;gap:1rem;margin-bottom:.4rem}
+#flow .head h3{margin:0}
+#flow .grow{flex:1}
+#stageSum{font-size:1.05rem;font-weight:800;color:var(--cyan)}
+/* 'safe center': when the rail is wider than the card (small window / high zoom) it
+   left-aligns and scrolls instead of cropping the first stages off-screen */
+.rail{display:flex;align-items:center;justify-content:safe center;gap:0;overflow-x:auto;padding:2rem .3rem .2rem}
+.node{min-width:6.2rem;text-align:center;padding:.6rem .55rem .5rem;border:2px solid var(--line2);border-radius:1rem;
+  background:var(--raised);color:var(--sub);font-size:.9rem;font-weight:700;position:relative;transition:all .3s}
+.node .ic{font-size:1.25rem;display:block;margin-bottom:.25rem;filter:grayscale(.85);opacity:.55}
+.node.active{border-color:var(--cyan);color:var(--cyan);background:var(--inset);
+  box-shadow:0 0 0 1px var(--cyan),0 0 24px var(--glow);animation:pulse 1.2s infinite}
+.node.active .ic{filter:none;opacity:1}
+.node.pass{border-color:var(--green);color:var(--ink)}
+.node.pass .ic{filter:none;opacity:1}
+.node.fail{border-color:var(--red);color:var(--red);animation:shake .5s}
+.node.wait{border-color:var(--amber);border-style:dashed;color:var(--amber)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 1px var(--cyan),0 0 8px var(--glow)}50%{box-shadow:0 0 0 1px var(--cyan),0 0 28px var(--glow)}}
+@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.edge{width:2.8rem;height:2px;background:linear-gradient(90deg,var(--line2),var(--line2));position:relative;flex:none}
+.edge::after{content:"";position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left-color:var(--line2)}
+.edge.lit{background:linear-gradient(90deg,var(--cyan),var(--green))} .edge.lit::after{border-left-color:var(--green)}
+.loopwrap{position:relative;display:flex;align-items:center}
+.loop{position:absolute;top:-1.7rem;left:7%;right:7%;height:1.15rem;border:2px dashed var(--line2);
+  border-bottom:none;border-radius:1rem 1rem 0 0;opacity:.65}
+.loop.lit{border-color:var(--amber);opacity:1;animation:pulse 1.2s infinite}
+.loop span{position:absolute;top:-.62rem;left:50%;transform:translateX(-50%);font-size:.72rem;white-space:nowrap;
+  background:var(--surface);padding:0 .6rem;color:var(--amber);letter-spacing:.08em;font-weight:800}
+#flowbar{height:.42rem;border-radius:.3rem;background:var(--inset);margin-top:.6rem;overflow:hidden}
+#flowbar i{display:block;height:100%;width:0;border-radius:.3rem;transition:width .6s;
+  background:linear-gradient(90deg,var(--cyan),var(--green))}
+
+/* ---- console log: fills its column, scrolls internally, never stretches the page ---- */
+#logcard{flex:1;display:flex;flex-direction:column;min-height:0}
+#log{flex:1;min-height:0;overflow-y:auto;font:.85rem/1.55 var(--mono);background:var(--inset);border-radius:.7rem;
+  padding:.85rem;border:1px solid var(--line);white-space:pre-wrap;word-break:break-word}
+#log .info{color:var(--dim)} #log .cmd{color:var(--cyan);font-weight:600} #log .pipe{color:var(--sub)}
+#log .agent{color:var(--cyan)} #log .tool{color:var(--amber)} #log .gate{color:var(--green);font-weight:700}
+#log .error{color:var(--red)} #log .loop{color:var(--amber);font-weight:700} #log .raw{color:var(--dim)}
+#log .atext{color:var(--ink);border-left:2px solid var(--cyan);padding-left:.6rem;margin:.35rem 0;display:block}
+#log .empty{color:var(--dim);font-style:italic}
+
+/* ---- gpu ---- */
+.gpubox{margin-bottom:.5rem}
+.gpubox .name{font-size:.9rem;color:var(--sub);font-weight:700}
+.gpubox .big{font-size:1.9rem;font-weight:800;color:var(--cyan);line-height:1.1}
+.bar{height:.5rem;border-radius:.3rem;background:var(--inset);overflow:hidden;margin:.3rem 0}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,#2f8fdd,var(--cyan));transition:width .5s}
+
+
+/* ---- artifacts gallery ---- */
+#arts{display:grid;grid-auto-flow:column;grid-auto-columns:10rem;gap:.8rem;overflow-x:auto;padding-bottom:.2rem;min-width:0}
+.art{border:1px solid var(--line2);border-radius:1rem;background:var(--raised);
+  padding:.7rem;cursor:pointer;text-align:center;transition:all .2s}
+.art:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:var(--shadow)}
+.art img{width:100%;height:3rem;object-fit:contain;background:#fff;border-radius:.5rem}
+.art .ph{height:3rem;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--dim);
+  background:var(--inset);border-radius:.5rem}
+.art .nm{font:.72rem var(--mono);color:var(--sub);margin-top:.3rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.art .st{font-size:.7rem;letter-spacing:.12em;color:var(--amber);text-transform:uppercase;font-weight:800;margin-top:.15rem}
+#artCount{color:var(--dim);font-size:.85rem;font-weight:600;margin-left:.7rem;text-transform:none;letter-spacing:0}
+
+/* ---- modal / settings ---- */
+#modal,#settings{position:fixed;inset:0;background:rgba(5,8,18,.7);display:none;align-items:center;justify-content:center;z-index:50}
+#modal .inner{width:min(78rem,94vw);height:min(50rem,90vh);background:var(--bg);border:1px solid var(--line2);
+  border-radius:1.1rem;display:flex;flex-direction:column;overflow:hidden}
+#modal .bar{display:flex;align-items:center;padding:.8rem 1.1rem;border-bottom:1px solid var(--line);background:var(--raised)}
+#modal .body{flex:1;overflow:auto}
+#modal iframe{width:100%;height:100%;border:0;background:#fff}
+#modal img{max-width:100%;display:block;margin:auto}
+#modal pre{font:.85rem/1.55 var(--mono);color:var(--ink);padding:1.2rem;white-space:pre-wrap}
+#settings .inner{width:min(36rem,94vw);background:var(--surface);border:1px solid var(--line2);
+  border-radius:1.1rem;padding:1.6rem;display:flex;flex-direction:column;gap:.8rem}
+#settings label{font-size:.85rem;color:var(--sub);font-weight:700}
+#settings .hint{font-size:.8rem;color:var(--dim)}
+#finalbox{min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column}
+#finalbox .vwrap{flex:1;min-height:0;display:flex}
+#finalbox video{max-width:100%;max-height:100%;width:auto;height:auto;margin:auto;display:block;
+  border-radius:.8rem;border:1px solid var(--line2);background:#000}
+.row2{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.55rem}
+label.up{border:1.5px dashed var(--line2);border-radius:.85rem;padding:.6rem;display:block;text-align:center;
+  color:var(--sub);cursor:pointer;margin-bottom:.7rem;font-weight:700}
+label.up:hover{border-color:var(--cyan);color:var(--cyan)}
+label.up.got{border-color:var(--green);color:var(--green)}
+.modes{display:flex;border:1px solid var(--line2);border-radius:.8rem;overflow:hidden;margin-bottom:.8rem}
+.modes button{flex:1;border:0;border-radius:0;background:transparent;color:var(--dim);padding:.55rem .3rem;font-weight:700}
+.modes button.sel{background:var(--glow);color:var(--cyan)}
+.note{font-size:.85rem;color:var(--dim);margin-top:.4rem}
+a{color:var(--cyan)}
+</style>
+<style>
+.banner{background:linear-gradient(90deg,rgba(255,192,122,.14),rgba(111,219,255,.10));
+  border:1px solid var(--line2);border-radius:.8rem;padding:.5rem 1rem;font-size:.9rem;color:var(--sub)}
+.banner b{color:var(--amber)}
+</style>
+</head>
+<body>
+<canvas id="bgfx" style="position:fixed;inset:0;z-index:-1;width:100vw;height:100vh"></canvas>
+
+<header>
+  <div>
+    <div class="logo">PaperReel Console</div>
+    <div class="sub">Turning Research Papers into Time-Scalable Explainer Videos</div>
+  </div>
+  <div class="grow"></div>
+  <span class="chip"><span class="dot ok"></span>recorded replay</span>
+  <button id="themeBtn" title="light / dark">🌗</button>
+</header>
+
+<div class="shell">
+  <div class="banner">▶ <b>Static replay of a real recorded run</b> — the pipeline graph, logs, and
+  artifacts below follow the run's actual artifact timeline (time-compressed). No computation
+  happens here; for live generation, see the installation guide on the
+  <a href="../" style="color:var(--cyan)">demo page</a>.</div>
+
+  <div class="card" id="flow">
+    <div class="head">
+      <h3>Pipeline — live from artifact ground truth</h3>
+      <div class="grow"></div>
+      <span id="stageSum">pick a run and press Play</span>
+    </div>
+    <div class="rail" id="rail"></div>
+    <div id="flowbar"><i></i></div>
+  </div>
+
+  <div class="grid">
+    <div class="col">
+      <div class="card">
+        <h3>Replay</h3>
+        <div class="row2"><select id="runSel" style="flex:1"></select></div>
+        <div class="row2">
+          <button class="primary" id="go">▶ Play replay</button>
+          <button id="stopBtn" disabled>Stop</button>
+        </div>
+        <div class="note" id="runNote"></div>
+      </div>
+      <div class="card">
+        <h3>GPU <span style="color:var(--dim);font-size:.72rem;text-transform:none;letter-spacing:0">· recorded run</span></h3>
+        <div class="gpubox">
+          <div class="name">GPU 7 · NVIDIA H100 80GB HBM3 (remote, over SSH)</div>
+          <div class="note">avatar stage of this run executed on the remote GPU; telemetry
+          streams live in the installed console</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card" id="finalbox" style="flex:1">
+        <h3>Final video</h3>
+        <div class="note" id="finalNote">appears here after FINAL QA passes</div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card" id="logcard">
+        <h3>Console — run log</h3>
+        <div id="log"><span class="empty">gate verdicts and stage logs replay here…</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Intermediate artifacts — click to inspect<span id="artCount"></span></h3>
+    <div id="arts"><span class="note">crop candidates, evidence pack, reviewed script, composition, QA reports…</span></div>
+  </div>
+</div>
+
+<div id="modal"><div class="inner">
+  <div class="bar"><b id="mTitle" style="flex:1"></b><button onclick="modal.style.display='none'">close</button></div>
+  <div class="body" id="mBody"></div>
+</div></div>
+
+<script>
+const $=q=>document.querySelector(q);
+
+/* theme + particle background (same as the live console) */
+const savedTheme=localStorage.getItem("prTheme");
+if(savedTheme)document.documentElement.dataset.theme=savedTheme;
+$("#themeBtn").onclick=()=>{
+  const cur=document.documentElement.dataset.theme==="light"?"":"light";
+  if(cur)document.documentElement.dataset.theme=cur;else delete document.documentElement.dataset.theme;
+  localStorage.setItem("prTheme",cur);
+};
+(()=>{
+  const cv=$("#bgfx"),ctx=cv.getContext("2d");
+  let W,H,pts;
+  function reset(){
+    W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;
+    const n=Math.round(innerWidth/26);
+    pts=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.18*devicePixelRatio,vy:(Math.random()-.5)*.18*devicePixelRatio,
+      r:(Math.random()*1.4+.7)*devicePixelRatio}));
+  }
+  reset();addEventListener("resize",reset);
+  const LINK=130*devicePixelRatio;
+  function tick(){
+    const light=document.documentElement.dataset.theme==="light";
+    const dot=light?"10,110,189":"111,219,255", ln=light?"40,90,180":"140,190,255";
+    ctx.clearRect(0,0,W,H);
+    for(const p of pts){
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);
+      ctx.fillStyle=`rgba(${dot},${light?.28:.5})`;ctx.fill();
+    }
+    ctx.lineWidth=devicePixelRatio*.6;
+    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
+      const a=pts[i],b=pts[j],dx=a.x-b.x,dy=a.y-b.y,d2=dx*dx+dy*dy;
+      if(d2<LINK*LINK){
+        ctx.strokeStyle=`rgba(${ln},${(1-Math.sqrt(d2)/LINK)*(light?.14:.16)})`;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* pipeline rail (same structure as live console) */
+const META={ingest:["📄","Ingest"],evidence:["🔍","Evidence"],script:["✍️","Script"],
+  review:["🧪","Review"],compose:["🧩","Compose"],validate:["🚦","Validate"],
+  render:["🎬","Render"],avatar:["🗣","Avatar"],final:["✅","Final"]};
+const ORDER=["ingest","evidence","script","review","compose","validate","render","avatar","final"];
+const GROUPS=[["ingest"],["evidence"],["script","review","evidence-grounded review"],
+  ["compose","validate","author ⇄ 4 gates"],["render"],["avatar"],["final"]];
+const LOOPS={script:"review",compose:"validate"};
+const rail=$("#rail");
+function mkNode(k){const n=document.createElement("div");n.className="node";n.id="node_"+k;
+  n.innerHTML=`<span class="ic">${META[k][0]}</span>${META[k][1]}`;return n;}
+function mkEdge(k){const e=document.createElement("div");e.className="edge";e.id="edge_"+k;return e;}
+GROUPS.forEach((g,i)=>{
+  if(i>0)rail.appendChild(mkEdge(g[0]));
+  if(g.length===1){rail.appendChild(mkNode(g[0]));return;}
+  const host=document.createElement("div");host.className="loopwrap";
+  const arc=document.createElement("div");arc.className="loop";arc.id="loop_"+g[0];
+  arc.innerHTML=`<span>${g[2]}</span>`;
+  host.appendChild(arc);host.appendChild(mkNode(g[0]));
+  host.appendChild(mkEdge(g[1]));host.appendChild(mkNode(g[1]));
+  rail.appendChild(host);
+});
+const passed=new Set();let currentStage=null;
+function setStage(s,st){
+  const n=$("#node_"+s); if(!n)return;
+  n.classList.remove("active","pass","fail","wait");
+  if(st!=="idle")n.classList.add(st);
+  if(st==="pass"){passed.add(s);const e=$("#edge_"+s);if(e)e.classList.add("lit");}
+  if(st==="active")currentStage=s;
+  const owner=Object.keys(LOOPS).find(k=>LOOPS[k]===s||k===s);
+  if(owner){const arc=$("#loop_"+owner);
+    if(arc)arc.classList.toggle("lit",st==="active"||st==="fail"||st==="wait");}
+  const done=ORDER.filter(k=>passed.has(k)).length;
+  const cur=st==="active"?s:currentStage;
+  $("#stageSum").textContent=`Stage ${Math.min(done+1,9)}/9 · ${META[cur||s][1]}`;
+  $("#flowbar i").style.width=(done/9*100)+"%";
+}
+
+const log=$("#log");
+function clearEmpty(){const e=log.querySelector(".empty");if(e)e.remove();}
+function addLog(cls,txt){clearEmpty();const d=document.createElement("span");d.className=cls;
+  d.textContent=txt+"\n";log.appendChild(d);log.scrollTop=log.scrollHeight;}
+
+/* runs registry + player */
+let RUNS=[],timers=[],curRun=null;
+const seenArts=new Set();
+const modal=$("#modal");
+fetch("runs.json").then(r=>r.json()).then(j=>{
+  RUNS=j;
+  $("#runSel").innerHTML=j.map(r=>`<option value="${r.name}">${r.title}</option>`).join("");
+  if(j.length)$("#runNote").textContent="a real end-to-end generation, replayed from its artifacts";
+});
+function resetUI(){
+  timers.forEach(clearTimeout);timers=[];
+  log.innerHTML="";$("#arts").innerHTML="";$("#artCount").textContent="";seenArts.clear();
+  passed.clear();currentStage=null;$("#flowbar i").style.width="0";
+  $("#finalbox").innerHTML='<h3>Final video</h3><div class="note" id="finalNote">running…</div>';
+  document.querySelectorAll(".node").forEach(n=>n.className="node");
+  document.querySelectorAll(".edge").forEach(e=>e.classList.remove("lit"));
+}
+$("#go").onclick=async()=>{
+  curRun=$("#runSel").value;
+  const events=await (await fetch(`runs/${curRun}/events.json`)).json();
+  resetUI();
+  $("#go").disabled=true;$("#stopBtn").disabled=false;
+  for(const ev of events){
+    timers.push(setTimeout(()=>handle(ev),ev.t*1000));
+  }
+};
+$("#stopBtn").onclick=()=>{timers.forEach(clearTimeout);timers=[];$("#go").disabled=false;$("#stopBtn").disabled=true;};
+function handle(ev){
+  if(ev.type==="log")addLog(ev.cls,ev.text);
+  else if(ev.type==="stage")setStage(ev.stage,ev.status);
+  else if(ev.type==="artifact")addArt(ev);
+  else if(ev.type==="done"){
+    addLog(ev.ok?"gate":"error",ev.ok?"✔ DONE — final video ready":"✖ run ended without a final video");
+    if(ev.video){
+      $("#finalbox").innerHTML='<h3>Final video</h3>'+
+        `<div class="vwrap"><video controls src="runs/${curRun}/${ev.video}"></video></div>`+
+        `<div class="note" style="flex:none"><a href="runs/${curRun}/${ev.video}" download>download video.mp4</a></div>`;
+      setStage("final","pass");
+      $("#stageSum").textContent="Complete · 9/9 gates passed";$("#flowbar i").style.width="100%";
+    }
+    $("#go").disabled=false;$("#stopBtn").disabled=true;
+  }
+}
+function addArt(ev){
+  if(seenArts.has(ev.path))return;seenArts.add(ev.path);
+  if($("#arts .note"))$("#arts").innerHTML="";
+  const url=`runs/${curRun}/${ev.path}`;
+  const d=document.createElement("div");d.className="art";
+  const icon={json:"{ }",text:"¶",html:"</>",video:"▶"}[ev.kind]||"◻";
+  d.innerHTML=(ev.kind==="image"?`<img src="${url}">`:`<div class="ph">${icon}</div>`)+
+    `<div class="st">${ev.stage}</div><div class="nm">${ev.name}</div>`;
+  d.onclick=async()=>{
+    $("#mTitle").textContent=ev.name;const b=$("#mBody");b.innerHTML="";
+    if(ev.kind==="image")b.innerHTML=`<img src="${url}">`;
+    else if(ev.kind==="html")b.innerHTML=`<iframe src="${url}"></iframe>`;
+    else if(ev.kind==="video")b.innerHTML=`<video controls autoplay style="width:100%" src="${url}"></video>`;
+    else{const t=await (await fetch(url)).text();
+      let pretty=t;try{pretty=JSON.stringify(JSON.parse(t),null,2)}catch(e){}
+      b.innerHTML="<pre></pre>";b.firstChild.textContent=pretty.slice(0,60000);}
+    modal.style.display="flex";
+  };
+  $("#arts").appendChild(d);
+  $("#artCount").textContent=` · ${seenArts.size} artifact${seenArts.size>1?"s":""}`;
+}
+</script>
+</body>
+</html>

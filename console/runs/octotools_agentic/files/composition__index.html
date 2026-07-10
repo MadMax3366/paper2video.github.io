@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"></head>
+<body style="margin:0;overflow:hidden;">
+<div data-composition-id="p2v-octotools" data-start="0" data-duration="120"
+     data-width="1920" data-height="1080" data-fps="24">
+
+  <audio id="narration" data-start="0" data-duration="120" data-track-index="9"
+         src="narration.wav"></audio>
+
+  <div class="bg" style="background-image:url(assets/background.png);background-size:cover;background-position:center;"></div>
+  <div class="bg-overlay"></div>
+  <div class="avatar-reserved" data-qa-id="avatar-reserved"></div>
+  <div class="titlebar" data-qa-id="paper-title">OctoTools: A Multi-Agent Framework with Extensible Tools for Complex Reasoning</div>
+
+  <!-- Scene 1: HOOK 0-14.3 -->
+  <section class="scene" id="s1">
+    <div class="scene-label" data-qa-id="scene-label">HOOK</div>
+    <div class="hook-block">
+      <h1 class="title" data-qa-id="scene-title">Octo<span class="accent">Tools</span></h1>
+      <p class="subtitle">One agent framework. Sixteen benchmarks. Zero extra training.</p>
+      <p class="attribution">Lu · Chen · Liu · Thapa · Boen · Zou — Stanford University</p>
+    </div>
+  </section>
+
+  <!-- Scene 2: PROBLEM 14.3-28.1 -->
+  <section class="scene" id="s2">
+    <div class="scene-label" data-qa-id="scene-label">PROBLEM</div>
+    <h2 class="scene-heading" data-qa-id="scene-title">One prompt can't do it all</h2>
+    <div class="emphasis-block" data-qa-id="body-text">
+      <p class="emphasis-line" id="p1">A single question can demand <span class="accent">vision</span>, <span class="accent">calculation</span>, and <span class="accent">outside knowledge</span> at once.</p>
+      <p class="emphasis-line" id="p2">Plain prompting stalls on multi-step chains.</p>
+      <p class="emphasis-line" id="p3">Existing tool frameworks are <span class="warm">domain-locked</span>, <span class="warm">training-hungry</span>, or <span class="warm">single-step</span>.</p>
+    </div>
+  </section>
+
+  <!-- Scene 3: METHOD 28.1-49.1 -->
+  <section class="scene" id="s3">
+    <div class="scene-label" data-qa-id="scene-label">METHOD</div>
+    <h2 class="scene-heading" data-qa-id="scene-title">Inside the framework — Figure 2</h2>
+    <div class="figure-card method-fig" data-qa-id="figure-card">
+      <img data-qa-id="main-figure" src="assets/main_figure.png" alt="OctoTools framework diagram" />
+      <div class="hl-ring" id="ring3a"></div>
+      <div class="hl-ring" id="ring3b"></div>
+      <div class="hl-ring" id="ring3c"></div>
+      <div class="figure-caption" data-qa-id="figure-caption">Fig. 2 — Tool cards feed a planner (action predictor + context verifier) and an executor (command generator + executor).</div>
+    </div>
+    <div class="method-notes" data-qa-id="body-text">
+      <p><b class="accent">Tool cards</b> — standardized metadata: inputs, outputs, limits, best practices. New tools plug in with no retraining.</p>
+      <p><b class="accent">Planner</b> — one sub-goal and one tool per step; a verifier decides <i>continue</i> or <i>stop</i>.</p>
+      <p><b class="accent">Executor</b> — turns each planned action into runnable Python and executes it.</p>
+    </div>
+  </section>
+
+  <!-- Scene 4: EXPERIMENTS 49.1-62.6 -->
+  <section class="scene" id="s4">
+    <div class="scene-label" data-qa-id="scene-label">EXPERIMENTS</div>
+    <h2 class="scene-heading" data-qa-id="scene-title">A controlled head-to-head</h2>
+    <div class="card-row" id="exp-cards">
+      <div class="info-card">
+        <div class="card-big">16</div>
+        <div class="card-title">benchmarks</div>
+        <div class="card-sub">text + vision · math, science, medicine, agentic &amp; visual reasoning</div>
+      </div>
+      <div class="info-card">
+        <div class="card-big">Same field</div>
+        <div class="card-title">identical setup</div>
+        <div class="card-sub">GPT-4o backbone, same tools, 10-step / 300 s budget for every framework</div>
+      </div>
+      <div class="info-card">
+        <div class="card-big">3 rivals</div>
+        <div class="card-title">agent baselines</div>
+        <div class="card-sub">AutoGen · GPT-Functions · LangChain, plus zero-shot and CoT</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 5: RESULTS 62.6-76.8 -->
+  <section class="scene" id="s5">
+    <div class="scene-label" data-qa-id="scene-label">RESULTS</div>
+    <h2 class="scene-heading" data-qa-id="scene-title">What the numbers say</h2>
+    <div class="figure-card result-fig" data-qa-id="figure-card">
+      <img data-qa-id="result-figure" src="assets/result_figure.png" alt="Average accuracy across 16 benchmarks" />
+      <div class="hl-ring" id="ring5"></div>
+      <div class="figure-caption" data-qa-id="figure-caption">Fig. 1 — Average accuracy on 16 tasks.</div>
+    </div>
+    <div class="result-notes" data-qa-id="body-text">
+      <div class="chip-col" id="res-chips">
+        <div class="chip"><b>58.5%</b> average accuracy</div>
+        <div class="chip"><b>+9.3</b> over zero-shot GPT-4o · <b>+7.7</b> over CoT</div>
+        <div class="chip"><b>+10.6</b> vs AutoGen — same tools, same budget</div>
+      </div>
+      <p class="result-read">Coordination, not brute force: the biggest jumps land where tools matter most — <b class="warm">+22.5</b> on Game of 24, <b class="warm">+22.2</b> on PathCLS pathology images.</p>
+    </div>
+  </section>
+
+  <!-- Scene 6: CONTRIBUTION 76.8-91.5 -->
+  <section class="scene" id="s6">
+    <div class="scene-label" data-qa-id="scene-label">CONTRIBUTION</div>
+    <h2 class="scene-heading" data-qa-id="scene-title">What the paper delivers</h2>
+    <div class="card-row" id="con-cards">
+      <div class="info-card" data-qa-id="contribution-card">
+        <div class="card-title">Training-free framework</div>
+        <div class="card-sub">Extensible multi-agent design — no fine-tuning, no framework surgery to add a tool</div>
+      </div>
+      <div class="info-card" data-qa-id="contribution-card">
+        <div class="card-title">Planner–executor paradigm</div>
+        <div class="card-sub">Standardized tool cards + a context verifier that stops early — only 2.56 steps executed on average</div>
+      </div>
+      <div class="info-card" data-qa-id="contribution-card">
+        <div class="card-title">Toolset optimization</div>
+        <div class="card-sub">Greedy O(n) search over tool subsets instead of O(2ⁿ) — 58.9% with the optimized set</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 7: INSIGHT 91.5-106.5 -->
+  <section class="scene" id="s7">
+    <div class="scene-label" data-qa-id="scene-label">INSIGHT</div>
+    <h2 class="scene-heading" data-qa-id="scene-title">Where failures actually come from</h2>
+    <div class="emphasis-block" data-qa-id="body-text">
+      <p class="emphasis-line" id="i1">Of 200 dissected failures, most trace to <span class="warm">weak tools</span> and <span class="warm">imperfect plans</span> — not the framework.</p>
+      <div class="chip-row" id="ins-chips">
+        <div class="chip"><b>65%</b> weak tools</div>
+        <div class="chip"><b>45%</b> low-level plan</div>
+        <div class="chip"><b>1.5%</b> framework core</div>
+      </div>
+      <p class="emphasis-line" id="i2">And with random tool failures injected at p = 0.4, accuracy drops ≤ 1.6 points.</p>
+    </div>
+  </section>
+
+  <!-- Scene 8: TAKEAWAY 106.5-120 -->
+  <section class="scene" id="s8">
+    <div class="scene-label" data-qa-id="scene-label">TAKEAWAY</div>
+    <div class="takeaway-block" data-qa-id="body-text">
+      <p class="takeaway">Smarter agents aren't bigger models —<br/>they're <span class="accent">better-organized</span> ones.</p>
+      <p class="takeaway-sub">Plan. Verify. Call the right tool. That's OctoTools.</p>
+    </div>
+  </section>
+
+  <!-- Subtitle bar -->
+  <div class="capbar">
+    <div class="cap" id="cap1" data-qa-id="subtitle">Ever ask a model to solve a problem that needs a diagram, a calculation, and outside knowledge all at once?</div>
+    <div class="cap" id="cap2" data-qa-id="subtitle">That is where OctoTools starts: it treats complex reasoning as a workflow, not a single prompt.</div>
+    <div class="cap" id="cap3" data-qa-id="subtitle">Plain prompting often stalls when a task asks for vision, retrieval, and multi-step reasoning in one pass.</div>
+    <div class="cap" id="cap4" data-qa-id="subtitle">Existing tool systems can be tied to one domain, need training, or struggle to coordinate multiple steps reliably.</div>
+    <div class="cap" id="cap5" data-qa-id="subtitle">Figure 2 shows the setup: a training-free framework built around tool cards, a planner, and an executor.</div>
+    <div class="cap" id="cap6" data-qa-id="subtitle">The tool cards spell out inputs, outputs, limits, and best practices; the planner chooses the next action;</div>
+    <div class="cap" id="cap7" data-qa-id="subtitle">the verifier checks whether to continue, and the executor turns that action into a Python command and runs it.</div>
+    <div class="cap" id="cap8" data-qa-id="subtitle">The authors test on 16 benchmarks across text and vision, spanning math, science, medicine, agents, and visual reasoning.</div>
+    <div class="cap" id="cap9" data-qa-id="subtitle">They compare GPT-4o with zero-shot, CoT, and several agent frameworks using the same tools and budget.</div>
+    <div class="cap" id="cap10" data-qa-id="subtitle">OctoTools reaches 58.5 percent average accuracy, up 9.3 points over zero-shot GPT-4o and 7.7 over CoT.</div>
+    <div class="cap" id="cap11" data-qa-id="subtitle">With identical tools and budgets, it also beats AutoGen by 10.6 points, GPT-Functions by 7.5, and LangChain by 7.3.</div>
+    <div class="cap" id="cap12" data-qa-id="subtitle">That lift comes from coordination, not brute force.</div>
+    <div class="cap" id="cap13" data-qa-id="subtitle">The verifier often stops early, so the system averages only 2.56 executed steps,</div>
+    <div class="cap" id="cap14" data-qa-id="subtitle">and the toolset search is greedy, not exponential, so it can pick a better set efficiently.</div>
+    <div class="cap" id="cap15" data-qa-id="subtitle">On the hardest tool-heavy tasks, like Game of 24 and PathCLS, the gains are even larger.</div>
+    <div class="cap" id="cap16" data-qa-id="subtitle">And when tools fail, performance drops only a little; most errors come from weak tools or planning, not from the core framework.</div>
+    <div class="cap" id="cap17" data-qa-id="subtitle">So the big idea is simple: if a task needs several different kinds of reasoning,</div>
+    <div class="cap" id="cap18" data-qa-id="subtitle">give the model a planner, a verifier, and the right tools instead of asking one prompt to do everything itself.</div>
+  </div>
+
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, Helvetica, "Noto Sans", sans-serif; }
+
+    .bg { position: absolute; inset: 0; z-index: 0; }
+    .bg-overlay { position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(8,10,20,0.72), rgba(8,10,20,0.82)); }
+
+    .avatar-reserved { position: absolute; left: 1450px; top: 610px; width: 400px; height: 400px;
+      z-index: 2; pointer-events: none; }
+
+    .titlebar { position: absolute; top: 34px; left: 500px; right: 500px; z-index: 8;
+      text-align: center; color: #fff; font-size: 23px; font-weight: 700; line-height: 1.25;
+      max-height: 66px; overflow: hidden; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+
+    .scene { position: absolute; inset: 0; opacity: 0; z-index: 3; color: #f2f6ff; }
+
+    .scene-label { position: absolute; top: 50px; left: 80px;
+      font-family: Arial, Helvetica, "Noto Sans", sans-serif;
+      font-size: 34px; font-weight: 800; letter-spacing: 0.06em; color: #6db4ff; }
+
+    .scene-heading { position: absolute; top: 112px; left: 140px; margin: 0;
+      font-size: 42px; font-weight: 800; color: #ffffff; text-shadow: 0 2px 14px rgba(0,0,0,.5); }
+
+    .accent { color: #6db4ff; }
+    .warm { color: #ffb37c; }
+
+    /* Scene 1 */
+    .hook-block { position: absolute; left: 0; right: 0; top: 330px; text-align: center; }
+    .title { margin: 0; font-size: 110px; font-weight: 900; letter-spacing: 0.01em;
+      color: #ffffff; text-shadow: 0 6px 30px rgba(0,0,0,.55); }
+    .subtitle { margin: 26px 0 0; font-size: 32px; font-weight: 600; color: #dbe7ff; }
+    .attribution { margin: 20px 0 0; font-size: 22px; color: #9fb2d8; }
+
+    /* Emphasis scenes (PROBLEM / INSIGHT) */
+    .emphasis-block { position: absolute; left: 140px; top: 250px; width: 1240px; }
+    .emphasis-line { font-size: 36px; font-weight: 600; line-height: 1.4; margin: 0 0 34px;
+      max-width: 1200px; text-align: left; }
+
+    /* Figure cards */
+    .figure-card { position: absolute; background: #fff; border-radius: 12px; padding: 6px;
+      box-shadow: 0 18px 46px rgba(0,0,0,0.4); }
+    .figure-card img { display: block; width: 100%; border-radius: 8px; }
+    .figure-caption { font-size: 19px; color: #223; padding: 5px 10px 3px; text-align: center; }
+    .method-fig { left: 200px; top: 168px; width: 1520px; }
+    .result-fig { left: 150px; top: 182px; width: 652px; }
+
+    .hl-ring { position: absolute; border: 4px solid #ff7a3d; border-radius: 10px;
+      box-shadow: 0 0 18px rgba(255,122,61,.55); opacity: 0; pointer-events: none; }
+    #ring3a { left: 1.2%; top: 40%; width: 18%; height: 56%; }   /* tool cards */
+    #ring3b { left: 25%; top: 3%; width: 61%; height: 36%; }     /* planner row */
+    #ring3c { left: 38%; top: 56%; width: 32%; height: 38%; }    /* executor */
+    #ring5  { left: 80%; top: 8%; width: 17%; height: 76%; }     /* OctoTools bar */
+
+    /* Scene 3 notes */
+    .method-notes { position: absolute; left: 200px; top: 648px; width: 1180px; }
+    .method-notes p { font-size: 25px; line-height: 1.35; margin: 0 0 16px; text-align: left; }
+
+    /* Scene 5 notes */
+    .result-notes { position: absolute; left: 872px; top: 210px; width: 528px; }
+    .chip-col .chip { margin-bottom: 18px; }
+    .chip { display: inline-block; font-size: 26px; padding: 12px 20px; border-radius: 10px;
+      background: rgba(20,30,54,0.82); border: 1px solid rgba(109,180,255,0.35); color: #eaf2ff; }
+    .chip b { color: #6db4ff; font-size: 30px; }
+    .result-read { font-size: 25px; line-height: 1.4; margin: 22px 0 0; text-align: left; }
+
+    /* Card rows (EXPERIMENTS / CONTRIBUTION) */
+    .card-row { position: absolute; left: 140px; top: 250px; width: 1250px;
+      display: flex; gap: 35px; align-items: stretch; }
+    .info-card { flex: 1 1 0; background: rgba(16,24,44,0.82); border: 1px solid rgba(109,180,255,0.28);
+      border-radius: 14px; padding: 28px 26px; box-shadow: 0 14px 36px rgba(0,0,0,0.35); }
+    .card-big { font-size: 52px; font-weight: 900; color: #6db4ff; margin-bottom: 8px; }
+    .card-title { font-size: 27px; font-weight: 800; color: #ffffff; margin-bottom: 12px; }
+    .card-sub { font-size: 21px; line-height: 1.4; color: #c9d7f2; }
+
+    /* Scene 7 chips */
+    .chip-row { display: flex; gap: 24px; margin: 6px 0 34px; }
+    .chip-row .chip b { color: #ffb37c; }
+
+    /* Scene 8 */
+    .takeaway-block { position: absolute; left: 0; right: 0; top: 340px; text-align: center; }
+    .takeaway { margin: 0 auto; font-size: 54px; font-weight: 800; line-height: 1.3;
+      max-width: 1200px; color: #ffffff; text-shadow: 0 4px 22px rgba(0,0,0,.5); }
+    .takeaway-sub { margin: 30px auto 0; font-size: 30px; color: #dbe7ff; max-width: 1100px; }
+
+    /* Subtitles */
+    .capbar { position: absolute; left: 0; right: 480px; bottom: 46px; height: 0; z-index: 7; }
+    .cap { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; width: fit-content;
+      opacity: 0; max-width: 1300px; text-align: center; font-size: 24px; line-height: 1.35;
+      padding: 12px 24px; background: rgba(0,0,0,0.65); color: #fff; border-radius: 8px; }
+  </style>
+
+  <script src="gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true, defaults: { ease: "power2.out" } });
+
+    function scene(sel, t0, t1) {
+      tl.set(sel, { opacity: 1 }, t0);
+      tl.to(sel, { opacity: 0, duration: 0.8 }, t1 - 0.8);
+    }
+    function cap(sel, t0, t1) {
+      tl.set(".cap", { opacity: 0 }, t0 - 0.05);
+      tl.fromTo(sel, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, t0);
+      tl.to(sel, { opacity: 0, duration: 0.4 }, t1 - 0.45);
+    }
+
+    // Scenes (word-proportional to the 303-word narration, scaled to the
+    // measured 117.14 s TTS duration; s8 holds through the 120 s tail)
+    scene("#s1", 0.0, 14.0);
+    scene("#s2", 14.0, 27.4);
+    scene("#s3", 27.4, 47.9);
+    scene("#s4", 47.9, 61.1);
+    scene("#s5", 61.1, 75.0);
+    scene("#s6", 75.0, 89.3);
+    scene("#s7", 89.3, 104.0);
+    scene("#s8", 104.0, 120.0);
+
+    // Scene 1 — title rise
+    tl.fromTo("#s1 .title", { opacity: 0, y: 26, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 1.0 }, 0.2);
+    tl.fromTo("#s1 .subtitle", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8 }, 0.8);
+    tl.fromTo("#s1 .attribution", { opacity: 0 }, { opacity: 1, duration: 0.8 }, 1.4);
+
+    // Scene 2 — staggered pain points
+    tl.fromTo("#p1", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 14.3);
+    tl.fromTo("#p2", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 14.9);
+    tl.fromTo("#p3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 15.5);
+
+    // Scene 3 — figure entrance, notes, highlight sweep over Fig. 2 regions
+    tl.fromTo("#s3 .figure-card", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8 }, 27.7);
+    tl.fromTo("#s3 .method-notes p", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.25 }, 28.5);
+    tl.to("#ring3a", { opacity: 1, duration: 0.4 }, 33.7);   // tool cards
+    tl.to("#ring3a", { opacity: 0, duration: 0.4 }, 37.9);
+    tl.to("#ring3b", { opacity: 1, duration: 0.4 }, 38.3);   // planner row
+    tl.to("#ring3b", { opacity: 0, duration: 0.4 }, 42.3);
+    tl.to("#ring3c", { opacity: 1, duration: 0.4 }, 42.7);   // executor
+    tl.to("#ring3c", { opacity: 0, duration: 0.4 }, 46.4);
+
+    // Scene 4 — setup cards pop in
+    tl.fromTo("#exp-cards .info-card", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.3 }, 48.3);
+
+    // Scene 5 — chart entrance, chips, ring on the OctoTools bar
+    tl.fromTo("#s5 .figure-card", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.8 }, 61.4);
+    tl.fromTo("#res-chips .chip", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.35 }, 62.1);
+    tl.fromTo("#s5 .result-read", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6 }, 63.8);
+    tl.to("#ring5", { opacity: 1, duration: 0.5 }, 64.9);
+    tl.to("#ring5", { opacity: 0.35, duration: 0.9, yoyo: true, repeat: 3 }, 65.6);
+    tl.to("#ring5", { opacity: 0, duration: 0.4 }, 72.7);
+
+    // Scene 6 — contribution cards
+    tl.fromTo("#con-cards .info-card", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.3 }, 75.4);
+
+    // Scene 7 — insight lines + failure-mode chips
+    tl.fromTo("#i1", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6 }, 89.7);
+    tl.fromTo("#ins-chips .chip", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.3 }, 90.5);
+    tl.fromTo("#i2", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6 }, 91.8);
+
+    // Scene 8 — takeaway
+    tl.fromTo("#s8 .takeaway", { opacity: 0, y: 22, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.9 }, 104.3);
+    tl.fromTo("#s8 .takeaway-sub", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7 }, 105.2);
+
+    // Captions (word-proportional, scaled to the 117.14 s narration)
+    cap("#cap1", 0.4, 7.7);
+    cap("#cap2", 7.7, 14.0);
+    cap("#cap3", 14.0, 20.5);
+    cap("#cap4", 20.5, 27.4);
+    cap("#cap5", 27.4, 34.1);
+    cap("#cap6", 34.1, 41.0);
+    cap("#cap7", 41.0, 47.9);
+    cap("#cap8", 47.9, 54.9);
+    cap("#cap9", 54.9, 61.1);
+    cap("#cap10", 61.1, 67.7);
+    cap("#cap11", 67.7, 75.0);
+    cap("#cap12", 75.0, 78.1);
+    cap("#cap13", 78.1, 83.2);
+    cap("#cap14", 83.2, 89.3);
+    cap("#cap15", 89.3, 95.5);
+    cap("#cap16", 95.5, 104.0);
+    cap("#cap17", 104.0, 109.4);
+    cap("#cap18", 109.4, 116.8);
+
+    window.__timelines["p2v-octotools"] = tl;
+  </script>
+</div>
+</body></html>

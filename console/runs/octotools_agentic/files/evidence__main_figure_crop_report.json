@@ -1,0 +1,35 @@
+{
+  "pid": "octotools",
+  "method": "graphic-region",
+  "candidates": [
+    {
+      "bbox": [
+        239,
+        241,
+        2229,
+        692
+      ],
+      "size": [
+        1991,
+        452
+      ],
+      "area_frac": 0.1034,
+      "ink_frac": 0.4656,
+      "aspect": 4.4,
+      "in_header_zone": true,
+      "page": 2,
+      "file": "evidence/main_figure_candidates/page2_graphic_0.png"
+    }
+  ],
+  "chosen": "page2 graphic refined bbox [225, 228, 2260, 742]",
+  "reason": "page2 framework figure (Figure 2); header-zone flag visually reviewed \u2014 region is the paper's main framework diagram, no title/author/email text; bbox extended to un-clip '(1) Tool cards' label, kept above caption",
+  "fallback": true,
+  "chosen_file": "evidence/main_figure.png",
+  "refined_bbox": [
+    225,
+    228,
+    2260,
+    742
+  ],
+  "figure_status": "accepted_fallback"
+}

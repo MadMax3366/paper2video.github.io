@@ -1,0 +1,25 @@
+{
+  "paper_title": "OctoTools: A Multi-Agent Framework with Extensible Tools for Complex Reasoning",
+  "hook": "Can one AI system count objects in an image, crack a math puzzle, and answer medical board questions, all without a single step of extra training? A team at Stanford says yes, and their answer has eight arms.",
+  "problem": "Complex reasoning means juggling vision, calculation, knowledge lookup, and multi-step logic all at once. Language models can borrow external tools for this, but existing frameworks demand costly training data, stay locked to one narrow domain, or fall apart when a problem takes many steps.",
+  "method": "OctoTools fixes this with three ideas working together. Tool cards wrap every tool in standardized metadata, so a new tool plugs in with no retraining and no framework changes. A planner agent drafts a high-level plan, then at each step picks one sub-goal and one tool. An executor agent translates that action into runnable Python and executes it. After every step, a context verifier decides: keep going, or stop and let the summarizer compile the answer.",
+  "experiments": "The Stanford team stress-tested this on sixteen benchmarks spanning vision, math, science, medicine, and agentic tasks, then went further, pitting OctoTools against AutoGen, GPT-Functions, and LangChain with the same GPT-4o backbone, identical tools, and the same ten-step budget.",
+  "results": "OctoTools averaged 58.5 percent accuracy, 9.3 points above GPT-4o alone and up to 10.6 points above rival frameworks holding the very same tools. The gains were largest where tools matter most: over 22 points on the Game of 24 math puzzle and on pathology image classification.",
+  "contribution": [
+    "A training-free, extensible multi-agent framework for complex reasoning",
+    "Planner-executor paradigm with standardized tool cards",
+    "Greedy toolset optimization, validated across 16 benchmarks"
+  ],
+  "insight": "Here is the deeper lesson: when the team dissected 200 failures, 65 percent traced to weak tools and barely one percent to the framework itself. Separating planning from execution is what keeps an agent reliable.",
+  "takeaway": "Smarter agents are not just bigger models. They are better-organized ones. That is OctoTools.",
+  "scene_plan": [
+    {"beat": "HOOK", "t": [0, 12], "visual": "title card over decorative background", "claim": "one framework, many domains, no training", "action": "fade-in title + subtitle"},
+    {"beat": "PROBLEM", "t": [12, 27], "visual": "emphasis statement", "claim": "existing tool frameworks are trained, narrow, or single-step", "action": "staggered emphasis lines"},
+    {"beat": "METHOD", "t": [27, 55], "visual": "paper Figure 2 (framework diagram) + explanation card", "claim": "tool cards + planner + executor + verifier loop", "action": "figure card slide-in, explanation bullets"},
+    {"beat": "EXPERIMENTS", "t": [55, 70], "visual": "setup stat cards (16 benchmarks / same tools / same budget)", "claim": "controlled comparison vs AutoGen, GPT-Functions, LangChain", "action": "cards pop in"},
+    {"beat": "RESULTS", "t": [70, 90], "visual": "paper Figure 1 (bar chart) + highlight callouts", "claim": "58.5% avg, +9.3 vs GPT-4o, +10.6 vs AutoGen", "action": "figure card + number callouts"},
+    {"beat": "CONTRIBUTION", "t": [90, 102], "visual": "three contribution cards", "claim": "framework, paradigm, optimizer", "action": "cards stagger in"},
+    {"beat": "INSIGHT", "t": [102, 112], "visual": "emphasis statement with 65% / 1.5% figures", "claim": "failures come from tools, not the framework", "action": "emphasis fade"},
+    {"beat": "TAKEAWAY", "t": [112, 120], "visual": "closing card", "claim": "organization beats scale", "action": "takeaway line"}
+  ]
+}

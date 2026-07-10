@@ -1,0 +1,406 @@
+[
+ {
+  "t": 0,
+  "type": "hello",
+  "engine": "replay",
+  "pid": "octotools_agentic"
+ },
+ {
+  "t": 0,
+  "type": "log",
+  "cls": "loop",
+  "text": "RECORDED REPLAY \u2014 events follow the real run's artifact timeline (time-compressed)."
+ },
+ {
+  "t": 1.2,
+  "type": "stage",
+  "stage": "ingest",
+  "status": "active"
+ },
+ {
+  "t": 1.8,
+  "type": "stage",
+  "stage": "ingest",
+  "status": "active"
+ },
+ {
+  "t": 3.4,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "active"
+ },
+ {
+  "t": 4.0,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "pass"
+ },
+ {
+  "t": 4.0,
+  "type": "artifact",
+  "stage": "evidence",
+  "name": "main_figure_crop_report.json",
+  "path": "files/evidence__main_figure_crop_report.json",
+  "kind": "json"
+ },
+ {
+  "t": 5.6,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "active"
+ },
+ {
+  "t": 6.2,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "pass"
+ },
+ {
+  "t": 6.2,
+  "type": "artifact",
+  "stage": "evidence",
+  "name": "paper_evidence_pack.md",
+  "path": "files/input__paper_evidence_pack.md",
+  "kind": "text"
+ },
+ {
+  "t": 7.8,
+  "type": "stage",
+  "stage": "script",
+  "status": "active"
+ },
+ {
+  "t": 8.4,
+  "type": "stage",
+  "stage": "script",
+  "status": "pass"
+ },
+ {
+  "t": 8.4,
+  "type": "artifact",
+  "stage": "script",
+  "name": "content.json",
+  "path": "files/input__content.json",
+  "kind": "json"
+ },
+ {
+  "t": 10.0,
+  "type": "stage",
+  "stage": "review",
+  "status": "active"
+ },
+ {
+  "t": 10.6,
+  "type": "stage",
+  "stage": "review",
+  "status": "pass"
+ },
+ {
+  "t": 10.6,
+  "type": "artifact",
+  "stage": "review",
+  "name": "content_review.json",
+  "path": "files/gpt_review__content_review.json",
+  "kind": "json"
+ },
+ {
+  "t": 11.0,
+  "type": "stage",
+  "stage": "script",
+  "status": "active"
+ },
+ {
+  "t": 11.6,
+  "type": "stage",
+  "stage": "script",
+  "status": "pass"
+ },
+ {
+  "t": 11.6,
+  "type": "artifact",
+  "stage": "script",
+  "name": "script.txt",
+  "path": "files/composition__script.txt",
+  "kind": "text"
+ },
+ {
+  "t": 12.0,
+  "type": "stage",
+  "stage": "review",
+  "status": "active"
+ },
+ {
+  "t": 12.6,
+  "type": "stage",
+  "stage": "review",
+  "status": "pass"
+ },
+ {
+  "t": 12.6,
+  "type": "artifact",
+  "stage": "review",
+  "name": "revision_checklist.md",
+  "path": "files/gpt_review__revision_checklist.md",
+  "kind": "text"
+ },
+ {
+  "t": 14.2,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "active"
+ },
+ {
+  "t": 14.8,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "pass"
+ },
+ {
+  "t": 14.8,
+  "type": "artifact",
+  "stage": "evidence",
+  "name": "main_figure.png",
+  "path": "files/composition__assets__main_figure.png",
+  "kind": "image"
+ },
+ {
+  "t": 15.2,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "active"
+ },
+ {
+  "t": 15.8,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "pass"
+ },
+ {
+  "t": 15.8,
+  "type": "artifact",
+  "stage": "evidence",
+  "name": "result_figure.png",
+  "path": "files/composition__assets__result_figure.png",
+  "kind": "image"
+ },
+ {
+  "t": 17.4,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "active"
+ },
+ {
+  "t": 18.0,
+  "type": "stage",
+  "stage": "evidence",
+  "status": "pass"
+ },
+ {
+  "t": 18.0,
+  "type": "artifact",
+  "stage": "evidence",
+  "name": "background.png",
+  "path": "files/composition__assets__background.png",
+  "kind": "image"
+ },
+ {
+  "t": 19.6,
+  "type": "stage",
+  "stage": "review",
+  "status": "active"
+ },
+ {
+  "t": 20.2,
+  "type": "stage",
+  "stage": "review",
+  "status": "pass"
+ },
+ {
+  "t": 21.8,
+  "type": "stage",
+  "stage": "compose",
+  "status": "active"
+ },
+ {
+  "t": 22.4,
+  "type": "stage",
+  "stage": "compose",
+  "status": "pass"
+ },
+ {
+  "t": 22.4,
+  "type": "artifact",
+  "stage": "compose",
+  "name": "index.html",
+  "path": "files/composition__index.html",
+  "kind": "html"
+ },
+ {
+  "t": 24.0,
+  "type": "stage",
+  "stage": "validate",
+  "status": "active"
+ },
+ {
+  "t": 24.6,
+  "type": "stage",
+  "stage": "validate",
+  "status": "pass"
+ },
+ {
+  "t": 24.6,
+  "type": "log",
+  "cls": "gate",
+  "text": "composition/preflight_report.json: verdict PASS"
+ },
+ {
+  "t": 24.6,
+  "type": "artifact",
+  "stage": "validate",
+  "name": "preflight_report.json",
+  "path": "files/composition__preflight_report.json",
+  "kind": "json"
+ },
+ {
+  "t": 26.2,
+  "type": "stage",
+  "stage": "validate",
+  "status": "active"
+ },
+ {
+  "t": 26.8,
+  "type": "stage",
+  "stage": "validate",
+  "status": "pass"
+ },
+ {
+  "t": 26.8,
+  "type": "log",
+  "cls": "gate",
+  "text": "composition/layout_debug_report.json: verdict PASS"
+ },
+ {
+  "t": 26.8,
+  "type": "artifact",
+  "stage": "validate",
+  "name": "layout_debug_report.json",
+  "path": "files/composition__layout_debug_report.json",
+  "kind": "json"
+ },
+ {
+  "t": 28.4,
+  "type": "stage",
+  "stage": "render",
+  "status": "active"
+ },
+ {
+  "t": 29.0,
+  "type": "stage",
+  "stage": "render",
+  "status": "pass"
+ },
+ {
+  "t": 30.6,
+  "type": "stage",
+  "stage": "render",
+  "status": "active"
+ },
+ {
+  "t": 31.2,
+  "type": "stage",
+  "stage": "render",
+  "status": "pass"
+ },
+ {
+  "t": 31.2,
+  "type": "log",
+  "cls": "gate",
+  "text": "base/base_qa_report.json: verdict PASS"
+ },
+ {
+  "t": 31.2,
+  "type": "artifact",
+  "stage": "render",
+  "name": "base_qa_report.json",
+  "path": "files/base__base_qa_report.json",
+  "kind": "json"
+ },
+ {
+  "t": 32.8,
+  "type": "stage",
+  "stage": "avatar",
+  "status": "active"
+ },
+ {
+  "t": 33.4,
+  "type": "stage",
+  "stage": "avatar",
+  "status": "pass"
+ },
+ {
+  "t": 33.4,
+  "type": "artifact",
+  "stage": "avatar",
+  "name": "video.mp4",
+  "path": "files/video.mp4",
+  "kind": "video"
+ },
+ {
+  "t": 34.82,
+  "type": "stage",
+  "stage": "final",
+  "status": "active"
+ },
+ {
+  "t": 35.42,
+  "type": "stage",
+  "stage": "final",
+  "status": "pass"
+ },
+ {
+  "t": 35.42,
+  "type": "log",
+  "cls": "gate",
+  "text": "final_qa_report.json: verdict PASS"
+ },
+ {
+  "t": 35.42,
+  "type": "artifact",
+  "stage": "final",
+  "name": "final_qa_report.json",
+  "path": "files/final_qa_report.json",
+  "kind": "json"
+ },
+ {
+  "t": 35.82,
+  "type": "stage",
+  "stage": "final",
+  "status": "active"
+ },
+ {
+  "t": 36.42,
+  "type": "stage",
+  "stage": "final",
+  "status": "pass"
+ },
+ {
+  "t": 36.42,
+  "type": "artifact",
+  "stage": "final",
+  "name": "video.mp4",
+  "path": "files/video.mp4",
+  "kind": "video"
+ },
+ {
+  "t": 37.42,
+  "type": "log",
+  "cls": "gate",
+  "text": "\u2714 DONE \u2014 final video ready"
+ },
+ {
+  "t": 37.42,
+  "type": "done",
+  "ok": true,
+  "video": "files/video.mp4"
+ }
+]

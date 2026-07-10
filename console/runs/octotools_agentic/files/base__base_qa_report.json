@@ -1,0 +1,11 @@
+{
+  "verdict": "PASS",
+  "duration_s": 120.021,
+  "res": "1920x1080",
+  "fps": "24/1",
+  "n_keyframes": 8,
+  "min_brightness": 30.3,
+  "preflight_pass": true,
+  "layout_pass": true,
+  "fails": []
+}

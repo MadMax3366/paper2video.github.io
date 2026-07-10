@@ -1,0 +1,29 @@
+{
+  "accuracy_issues": [],
+  "quality_notes": [
+    "The narration stays grounded in the evidence pack and uses Figure 2 to explain the method.",
+    "The hook is a genuine question, and the script follows a clear problem -> solution -> evidence -> insight arc.",
+    "The pacing is appropriate for roughly 120 seconds and avoids mechanical list-style narration."
+  ],
+  "word_count": 293,
+  "scene_scripts": {
+    "1_HOOK": "Ever ask a model to solve a problem that needs a diagram, a calculation, and outside knowledge all at once? That is where OctoTools starts: it treats complex reasoning as a workflow, not a single prompt.",
+    "2_PROBLEM": "Plain prompting often stalls when a task asks for vision, retrieval, and multi-step reasoning in one pass. Existing tool systems can be tied to one domain, need training, or struggle to coordinate multiple steps reliably.",
+    "3_METHOD": "Figure 2 shows the setup: a training-free framework built around tool cards, a planner, and an executor. The tool cards spell out inputs, outputs, limits, and best practices; the planner chooses the next action; the verifier checks whether to continue; and the executor turns that action into a Python command and runs it.",
+    "4_EXPERIMENTS": "The authors test on 16 benchmarks across text and vision, spanning math, science, medicine, agents, and visual reasoning. They compare GPT-4o with zero-shot, CoT, and several agent frameworks using the same tools and budget.",
+    "5_RESULTS": "OctoTools reaches 58.5 percent average accuracy, up 9.3 points over zero-shot GPT-4o and 7.7 over CoT. With identical tools and budgets, it also beats AutoGen by 10.6 points, GPT-Functions by 7.5, and LangChain by 7.3.",
+    "6_CONTRIBUTION": "That lift comes from coordination, not brute force. The verifier often stops early, so the system averages only 2.56 executed steps, and the toolset search is greedy, not exponential, so it can pick a better set efficiently.",
+    "7_INSIGHT": "On the hardest tool-heavy tasks, like Game of 24 and PathCLS, the gains are even larger. And when tools fail, performance drops only a little; most errors come from weak tools or planning, not from the core framework.",
+    "8_TAKEAWAY": "So the big idea is simple: if a task needs several different kinds of reasoning, give the model a planner, a verifier, and the right tools instead of asking one prompt to do everything itself."
+  },
+  "subtitles": [
+    "Ever ask a model to solve a problem that needs several kinds of reasoning at once?",
+    "Plain prompting often breaks when a task needs vision, retrieval, and multi-step reasoning.",
+    "Figure 2 shows a training-free planner, verifier, and executor wrapped around tool cards.",
+    "The paper tests 16 benchmarks across text and vision, with the same tools and budget.",
+    "OctoTools reaches 58.5 percent average accuracy and beats the main baselines.",
+    "The gain comes from coordination: early stopping and efficient toolset selection.",
+    "Biggest wins show up on tool-heavy tasks, and most failures come from tools or planning.",
+    "The takeaway: complex reasoning works better when the model can plan, check, and call tools."
+  ]
+}

@@ -360,7 +360,7 @@ function handle(ev){
   else if(ev.type==="stage")setStage(ev.stage,ev.status);
   else if(ev.type==="artifact")addArt(ev);
   else if(ev.type==="done"){
-    addLog(ev.ok?"gate":"error",ev.ok?"✔ DONE — final video ready":"✖ run ended without a final video");
+    if(!ev.ok)addLog("error","✖ run ended without a final video");
     if(ev.video){
       $("#finalbox").innerHTML='<h3>Final video</h3>'+
         `<div class="vwrap"><video controls src="runs/${curRun}/${ev.video}"></video></div>`+

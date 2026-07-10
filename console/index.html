@@ -156,6 +156,8 @@ label.up.got{border-color:var(--green);color:var(--green)}
 a{color:var(--cyan)}
 </style>
 <style>
+/* static page has 4 shell rows (banner, hero, grid, artifacts) — grid must stay the flex row */
+.shell{grid-template-rows:auto auto minmax(0,1fr) auto}
 .banner{background:linear-gradient(90deg,rgba(255,192,122,.14),rgba(111,219,255,.10));
   border:1px solid var(--line2);border-radius:.8rem;padding:.5rem 1rem;font-size:.9rem;color:var(--sub)}
 .banner b{color:var(--amber)}

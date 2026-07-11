@@ -94,6 +94,15 @@
             transition:transform .18s ease, box-shadow .18s ease; }
         .features-4column li:hover { transform:translateY(-3px); box-shadow:0 18px 44px rgba(30,20,70,.14); }
         .features-4column .vidwrap { border-radius:12px; box-shadow:none; }
+        .features-3wide { display:flex; flex-wrap:wrap; justify-content:center;
+            width:calc(100% + 2em); margin:1.5em 0 3em -2em; padding:0; list-style:none; }
+        .features-3wide li { width:calc(33.333% - 2em); margin-left:2em; margin-top:0;
+            background:#fff; border:1px solid rgba(80,70,120,.13); border-radius:16px;
+            padding:14px; box-shadow:0 12px 34px rgba(30,20,70,.08);
+            transition:transform .18s ease, box-shadow .18s ease; }
+        .features-3wide li:hover { transform:translateY(-3px); box-shadow:0 18px 44px rgba(30,20,70,.14); }
+        .features-3wide .vidwrap { border-radius:12px; box-shadow:none; }
+        @media screen and (max-width: 980px) { .features-3wide li { width:calc(100% - 2em); margin-bottom:1.5em; } }
         .pcap { font-size: 92%; text-align:left; margin-top:.5em; }
         .pcap b { display:block; font-size:108%; }
         .pcap span { color:#8a8aa0; font-size:90%; }
@@ -150,7 +159,7 @@
             <li><a href="#how">How it works</a></li>
             <li><a href="#eval">Evaluation</a></li>
             <li><a href="#papers">Papers</a></li>
-            <li><a href="#durations">Durations</a></li>
+            <li><a href="#durations">Time-scalable</a></li>
             <li><a href="console/">Console</a></li>
             <li><a href="https://github.com/MadMax3366/paper2video.github.io" target="_blank">GitHub</a></li>
         </ul>
@@ -381,7 +390,7 @@
                     budgets are filled by re-planning the narrative with more scenes and deeper experimental
                     detail, not by stretching a fixed script.</p>
             </header>
-            <ul class="features-4column" style="margin-top:-1em">
+            <ul class="features-3wide">
                 <li>
                     <div class="vidwrap"><video controls loop muted playsinline preload="none" poster="videos/dur1.jpg"><source src="videos/dur1.mp4" type="video/mp4"></video></div>
                     <p class="pcap"><b>1 minute</b><span>60.0&nbsp;s &middot; 153 narration words &middot; 6 scenes</span></p>
